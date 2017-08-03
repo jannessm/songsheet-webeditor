@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>B.and Songsheet Editor</title>
+    <link rel="stylesheet" type="text/css" href="./styles/style.css">
+    <link rel="stylesheet" type="text/css" href="./styles/buttons.css">
+    <link rel="stylesheet" type="text/css" href="./styles/standart-elements.css">
+    <script defer src="./script/songsheet.js" type="text/javascript"></script>
+    <script defer type="text/javascript">
+        var songJson;
+        function generate(toPdf) {
+            let songsheetGen = new SongsheetGen();
+            let sheet = document.getElementById("editor").value;
+            let drawTable = document.getElementsByName("drawLines")[0].checked;
+            songsheetGen.add_song(sheet, { table: drawTable, annotations: true });
+            songJson = songsheetGen.gen(toPdf);
+        }
+        function preview() {
+            let previewRenderer = document.getElementById("previwRenderer");
+            generate(false);
+        }
+    </script>
+</head>
+
+<body>
+    <!-- Editor Section -->
+    <section class="section--editor">
+        <div class="standard--tab">
+            <label>
+            <input checked  type="checkbox" name="drawLines" 
+                class="control-element">
+             Draw Table
+            </label>
+
+            <label>
+            Select Font: 
+            <select onchange="" class="control-element">
+                <option value="font1" selected>Font1</option>
+                <option value="font2">Font2</option>
+            </select>
+            </label>
+        </div>
+        <textarea onkeypress="preview()" id="editor"></textarea>
+    </section>
+
+    <!-- Preview Section -->
+    <section class="section--preview">
+        <div id="previewRenderer">
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-controls">
+            <a onclick="generate()" class="button-base footer-button">Download</a>
+        </div>
+    </footer>
+</body>
+
+</html>
