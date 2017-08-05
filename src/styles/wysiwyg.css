@@ -1,0 +1,13 @@
+#previewRenderer table {
+    padding-bottom: 5px;
+}
+#previewRenderer table.draw-lines {
+    border: 1px solid black;
+}
+#previewRenderer td.draw-lines {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+#previewRenderer table td {
+    padding-left: 3px;
+}

@@ -1,6 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400');
-.editor-section{
+.section--editor {
     display: block;
+}
+
+.section--preview {
+    overflow: scroll;
+    background: rgba(225, 225, 234,50);
 }
 
 #editor{
@@ -14,6 +19,7 @@
 textarea {
     width: 100%;
     height: 100%;
+    max-height: 100%;
     resize: none;
 }
 
@@ -39,5 +45,8 @@ textarea {
      margin-top: 10px;
      padding-bottom: 10px;
      padding-top: 10px;
+     z-index: 1;
+     border-style: solid;
+     border-top: medium solid  #3B3B3B;
+     border-bottom: medium solid  #3B3B3B;
 }
-
