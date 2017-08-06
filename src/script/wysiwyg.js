@@ -11,7 +11,6 @@ class Wysiwyg {
 
     convert(json) {
         let html = '';
-        console.log(json[0]);
         let _content = json[0].content;
         if (typeof _content === 'undefined') {
             throw new Error('Json Content is Undefined')
@@ -28,7 +27,7 @@ class Wysiwyg {
                         if (_stringObject.text instanceof Array) {
                             _stringObject.text.forEach(_textObject => {
                                 let stylings = '';
-                                stylings = this.createStyling(_textObject.italic,
+                                stylings = this.createStyling(_textObject.italics,
                                     _textObject.bold, _textObject.color,
                                     _textObject.fontSize, _textObject.lineHeight);
                                 let text = this.setHtmlWhiteSpaces(_textObject.text);
@@ -37,7 +36,7 @@ class Wysiwyg {
                             });
                         } else {
                             let stylings = '';
-                            stylings = this.createStyling(_stringObject.italic,
+                            stylings = this.createStyling(_stringObject.italics,
                                 _stringObject.bold, _stringObject.color,
                                 _stringObject.fontSize, _stringObject.lineHeight);
                             let text = this.setHtmlWhiteSpaces(_stringObject.text);
