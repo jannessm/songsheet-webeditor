@@ -6,12 +6,13 @@
 class Wysiwyg {
 
     constructor(drawLines) {
-        this.html = '';
         this.drawLines = drawLines;
     }
 
     convert(json) {
-        let _content = json.content;
+        let html = '';
+        console.log(json[0]);
+        let _content = json[0].content;
         if (typeof _content === 'undefined') {
             throw new Error('Json Content is Undefined')
         } else {
@@ -28,22 +29,17 @@ class Wysiwyg {
                         stylings = this.createStyling(_stringObject.italic,
                             _stringObject.bold, _stringObject.color,
                             _stringObject.fontSize, _stringObject.lineHeight);
-
-                        let spanElement = this.styleString(_stringObject.text, stylings);
+                        let text = this.setHtmlWhiteSpaces(_stringObject.text);
+                        let spanElement = this.styleString(text, stylings);
                         lineString = lineString + spanElement;
                     });
                     rows[i] = this.generateTableRow(lineString);
                     i++;
                 });
-                this.html = this.html + this.generateTable(rows);
-                console.log(this.html)
+                html = html + this.generateTable(rows);
             });
         }
-
-    }
-
-    show(innerHtml) {
-        innerHtml = this.html;
+        return html;
     }
 
     generateTable(stringRowArray) {
@@ -58,14 +54,23 @@ class Wysiwyg {
             table = table + rowString;
         });
         table = table + '</tbody></table>';
-        console.log(table);
         return table;
     }
 
     generateTableRow(styledString) {
-        let stringBuilder = '<tr><td>';
+        let stringBuilder = '';
+        stringBuilder = '<tr><td>';
         stringBuilder = stringBuilder + styledString;
-        stringBuilder = stringBuilder + '</td><td>  </td><td>  </td></tr>'
+        if (this.drawLines === true) {
+            stringBuilder = stringBuilder + `</td><td class="draw-lines"><tab></td>
+                            <td><tab></td></tr>`
+
+        }
+        else {
+            stringBuilder = stringBuilder + '</td><td><tab></td><td><tab></td></tr>'
+        }
+
+
         return stringBuilder;
     }
 
@@ -94,6 +99,11 @@ class Wysiwyg {
             stringBuilder = stringBuilder + 'line-height:' + lineHeight + ';';
         }
         return stringBuilder;
+    }
+
+    setHtmlWhiteSpaces(string) {
+        let whiteSpace = '&nbsp;';
+        return string.replace(/\s/g, whiteSpace);
     }
 
 

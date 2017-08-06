@@ -26,191 +26,6 @@
     <script type="text/javascript">
         let songJson;
 
-        var testJson = `
-       {
-        "content": [
-           {
-            "table": {
-                "body": [
-                [
-                    {
-                    "text": "Intro ",
-                    "font": "Roboto",
-                    "border": [
-                        false,
-                        false,
-                        false,
-                        true
-                    ],
-                    "preserveLeadingSpaces": true,
-                    "lineHeight": 1,
-                    "fontSize": 10,
-                    "bold": false,
-                    "italics": false,
-                    "color": "black"
-                    },
-                    {
-                    "text": " ",
-                    "border": [
-                        false,
-                        false,
-                        false,
-                        true
-                    ],
-                    "preserveLeadingSpaces": true,
-                    "lineHeight": 1
-                    },
-                    {
-                    "text": " ",
-                    "border": [
-                        false,
-                        false,
-                        false,
-                        true
-                    ],
-                    "preserveLeadingSpaces": true,
-                    "lineHeight": 1
-                    }
-                ],
-                [
-                    {
-                    "text": "G Em7 C D G  ",
-                    "font": "Roboto",
-                    "border": [
-                        false,
-                        false,
-                        false,
-                        false
-                    ],
-                    "preserveLeadingSpaces": true,
-                    "lineHeight": 1,
-                    "fontSize": 10,
-                    "bold": false,
-                    "italics": false,
-                    "color": "black"
-                    },
-                    {
-                    "text": "",
-                    "font": "Roboto",
-                    "border": [
-                        true,
-                        false,
-                        false,
-                        false
-                    ],
-                    "preserveLeadingSpaces": true,
-                    "lineHeight": 1
-                    },
-                    {
-                    "text": " ",
-                    "border": [
-                        true,
-                        false,
-                        false,
-                        false
-                    ],
-                    "preserveLeadingSpaces": true,
-                    "lineHeight": 1
-                    }
-                ],
-                [
-                    {
-                    "text": "     ",
-                    "font": "Roboto",
-                    "border": [
-                        false,
-                        false,
-                        false,
-                        true
-                    ],
-                    "preserveLeadingSpaces": true,
-                    "lineHeight": 1,
-                    "fontSize": 10,
-                    "bold": false,
-                    "italics": false,
-                    "color": "black"
-                    },
-                    {
-                    "text": "  ",
-                    "font": "Roboto",
-                    "border": [
-                        true,
-                        false,
-                        false,
-                        true
-                    ],
-                    "preserveLeadingSpaces": true,
-                    "lineHeight": 1,
-                    "fontSize": 10,
-                    "bold": false,
-                    "italics": false,
-                    "color": "black"
-                    },
-                    {
-                    "text": "  ",
-                    "font": "Roboto",
-                    "border": [
-                        true,
-                        false,
-                        false,
-                        true
-                    ],
-                    "preserveLeadingSpaces": true,
-                    "lineHeight": 1,
-                    "fontSize": 10,
-                    "bold": false,
-                    "italics": false,
-                    "color": "black"
-                    }
-                ],
-                [
-                    {
-                    "text": " ",
-                    "font": "Roboto",
-                    "border": [
-                        false,
-                        false,
-                        false,
-                        false
-                    ],
-                    "preserveLeadingSpaces": true,
-                    "lineHeight": 1
-                    },
-                    {
-                    "text": " ",
-                    "border": [
-                        false,
-                        false,
-                        false,
-                        false
-                    ],
-                    "preserveLeadingSpaces": true,
-                    "lineHeight": 1
-                    },
-                    {
-                    "text": " ",
-                    "border": [
-                        false,
-                        false,
-                        false,
-                        false
-                    ],
-                    "preserveLeadingSpaces": true,
-                    "lineHeight": 1
-                    }
-                ]
-                ],
-                "dontBreakRows": true,
-                "widths": [
-                265,
-                105,
-                105
-                ]
-            }
-            }
-        ]
-        }
-        `
         function generate(toPdf) {
             let drawTable = document.getElementById("drawLines").checked;
             let songsheetGen = new SongsheetGen();
@@ -221,11 +36,10 @@
 
         function preview() {
             let drawTable = document.getElementById("drawLines").checked;
-            let previewRenderer = document.getElementById("previewRenderer");
             generate(false);
             let wysiwyg = new Wysiwyg(drawTable);
-            wysiwyg.convert(JSON.parse(testJson));
-            wysiwyg.show(previewRenderer.innerHTML);
+            let preview = wysiwyg.convert(songJson);
+            document.getElementById("previewRenderer").innerHTML = preview;
         }
     </script>
 </head>
@@ -253,18 +67,7 @@
 
     <!-- Preview Section -->
     <section class="section--preview">
-        <div id="previewRenderer">
-            aas</br>
-            as</br>
-            as</br>
-            as</br>
-            as</br>as</br>
-            as</br>as</br>as</br>as</br>as</br>as</br>as</br>as</br>as</br>as</br>as</br>as</br>
-            as</br>as</br>as</br>as</br>as</br>as</br>as</br>as</br>as</br>as</br>as</br>as</br>as</br>
-            as</br>as</br>as</br>as</br>as</br>as</br>as</br>as</br>as</br>as</br>as</br>as</br>as</br>
-            as</br>as</br>as</br>as</br>as</br>as</br>as</br>as</br>as</br>as</br>as</br>as</br>as</br>as</br>as</br>
-            as</br>as</br>as</br>as</br>as</br>as</br>as</br>as</br>as</br>as</br>as</br>as</br>as</br>
-
+        <div id="previewRenderer" style="margin-top:10px">
         </div>
     </section>
 
