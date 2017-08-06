@@ -25,13 +25,25 @@ class Wysiwyg {
                     // Now generate spans for the substrings
                     let lineString = '';
                     _lineObject.forEach(_stringObject => {
-                        let stylings = '';
-                        stylings = this.createStyling(_stringObject.italic,
-                            _stringObject.bold, _stringObject.color,
-                            _stringObject.fontSize, _stringObject.lineHeight);
-                        let text = this.setHtmlWhiteSpaces(_stringObject.text);
-                        let spanElement = this.styleString(text, stylings);
-                        lineString = lineString + spanElement;
+                        if (_stringObject.text instanceof Array) {
+                            _stringObject.text.forEach(_textObject => {
+                                let stylings = '';
+                                stylings = this.createStyling(_textObject.italic,
+                                    _textObject.bold, _textObject.color,
+                                    _textObject.fontSize, _textObject.lineHeight);
+                                let text = this.setHtmlWhiteSpaces(_textObject.text);
+                                let spanElement = this.styleString(text, stylings);
+                                lineString = lineString + spanElement;
+                            });
+                        } else {
+                            let stylings = '';
+                            stylings = this.createStyling(_stringObject.italic,
+                                _stringObject.bold, _stringObject.color,
+                                _stringObject.fontSize, _stringObject.lineHeight);
+                            let text = this.setHtmlWhiteSpaces(_stringObject.text);
+                            let spanElement = this.styleString(text, stylings);
+                            lineString = lineString + spanElement;
+                        }
                     });
                     rows[i] = this.generateTableRow(lineString);
                     i++;
@@ -59,18 +71,15 @@ class Wysiwyg {
 
     generateTableRow(styledString) {
         let stringBuilder = '';
-        stringBuilder = '<tr><td>';
+        stringBuilder = '<tr><td class ="content">';
         stringBuilder = stringBuilder + styledString;
         if (this.drawLines === true) {
             stringBuilder = stringBuilder + `</td><td class="draw-lines"><tab></td>
                             <td><tab></td></tr>`
-
         }
         else {
             stringBuilder = stringBuilder + '</td><td><tab></td><td><tab></td></tr>'
         }
-
-
         return stringBuilder;
     }
 

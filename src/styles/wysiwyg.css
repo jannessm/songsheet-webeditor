@@ -8,8 +8,15 @@
 #previewRenderer td.draw-lines {
     border-right: 1px solid black;
     border-left: 1px solid black;
+    border-spacing: 5px;
 }
 #previewRenderer td {
-    width: 200px;  
-
+    width: 200px;
+    min-width:200px;
+    text-align: left;
+}
+#previewRenderer td.content {
+    width: 400px;
+    min-width: 400px;
+    text-align: left;
 }
