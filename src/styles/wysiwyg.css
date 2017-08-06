@@ -1,14 +1,22 @@
-#previewRenderer table {
-    padding-bottom: 0px;
+#previewRenderer{
 
 }
-#previewRenderer table.draw-lines {
+#previewRenderer table {
+    border-collapse: collapse;
+}
+#previewRenderer .draw-lines:first-child {
     border: 1px solid black;
+}
+#previewRenderer table.draw-lines {
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+   
 }
 #previewRenderer td.draw-lines {
     border-right: 1px solid black;
     border-left: 1px solid black;
-    border-spacing: 5px;
+     
 }
 #previewRenderer td {
     width: 200px;
@@ -16,7 +24,10 @@
     text-align: left;
 }
 #previewRenderer td.content {
-    width: 400px;
-    min-width: 400px;
+    width: 450px;
+    min-width: 450px;
     text-align: left;
+    padding-left: 8px;
+    padding-top: 2px;
+    padding-bottom: 2px;
 }
