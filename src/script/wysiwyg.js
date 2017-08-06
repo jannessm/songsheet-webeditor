@@ -6,14 +6,39 @@
 class Wysiwyg {
 
     constructor(drawLines) {
-        this.json;
         this.html = '';
         this.drawLines = drawLines;
     }
 
     convert(json) {
-        this.json = JSON.parse(json).content;
+        let _content = json.content;
+        if (typeof _content === 'undefined') {
+            throw new Error('Json Content is Undefined')
+        } else {
+            // For each table
+            _content.forEach(_object => {
+                // Read the body attribute (also array)->indices are lines
+                let rows = new Array(_object.table.body.length);
+                let i = 0;
+                _object.table.body.forEach(_lineObject => {
+                    // Now generate spans for the substrings
+                    let lineString = '';
+                    _lineObject.forEach(_stringObject => {
+                        let stylings = '';
+                        stylings = this.createStyling(_stringObject.italic,
+                            _stringObject.bold, _stringObject.color,
+                            _stringObject.fontSize, _stringObject.lineHeight);
 
+                        let spanElement = this.styleString(_stringObject.text, stylings);
+                        lineString = lineString + spanElement;
+                    });
+                    rows[i] = this.generateTableRow(lineString);
+                    i++;
+                });
+                this.html = this.html + this.generateTable(rows);
+                console.log(this.html)
+            });
+        }
 
     }
 
@@ -33,23 +58,22 @@ class Wysiwyg {
             table = table + rowString;
         });
         table = table + '</tbody></table>';
+        console.log(table);
         return table;
     }
 
-    generateTableRow(styledStrings) {
+    generateTableRow(styledString) {
         let stringBuilder = '<tr><td>';
-        styledStrings.forEach(string => {
-            stringBuilder = stringBuilder + string;
-        });
+        stringBuilder = stringBuilder + styledString;
         stringBuilder = stringBuilder + '</td><td>  </td><td>  </td></tr>'
-
-
+        return stringBuilder;
     }
 
     styleString(string, styles) {
         let htmlBuilder = '';
         htmlBuilder = '<span style="' + styles + '">';
         htmlBuilder = htmlBuilder + string + '</span>';
+        return htmlBuilder;
     }
 
     createStyling(isItalic, isBold, color, fontSize, lineHeight) {
