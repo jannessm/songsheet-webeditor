@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400');
+
+footer {
+  position: fixed;
+  height: 65px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-top: 5px;
+  padding-top: 5px;
+  background: rgba(217, 217, 217, 0.75);
+  border-style: solid;
+  border-top: medium solid  #3B3B3B;
+  z-index: 1;
+}
+.footer-controls{
+    padding-top: 15px;
+    display: block;
+}
+
+html, body{
+    box-sizing: border-box;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin: 0; 
+    overflow: hidden;
+    font-family: 'Open Sans', sans-serif;
+    font-weight:  300;
+    display: inline;
+}
+body {
+   background: rgba(217, 217, 217, 0.75);
+}
+
+label {
+    padding: 5px;
+    margin-left: 10px;
+}
+
+select {
+    width: 100px;
+    height: 25px;
+}
+
+section {
+    display: block; 
+    float: left;
+    width: calc(50% - 20px); 
+    max-width: calc(50% - 20px); 
+    height: calc(100% - 105px);
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+
