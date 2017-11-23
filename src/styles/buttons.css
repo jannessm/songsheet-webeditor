@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400');
 .button-base {
-  box-sizing: inherit;
+  box-sizing: border-box;
   transition-property: all;
-  transition-duration: .6s;
+  transition-duration: .2s;
   transition-timing-function: ease;
 
   color: #3B3B3B;
@@ -11,38 +11,12 @@
   font-size: 18px;
   font-family: 'Open Sans', sans-serif;
   font-weight:  300;
-  line-height: 35px;
-  margin: 0 auto 2em;
-  max-width: 100px; 
   position: relative;
   text-decoration: none;
   vertical-align: middle;
-  width: 100%; 
-  
-  @media(min-width: 400px) {
-    display: inline-block;
-    margin-right: 2.5em;
-  
-    &:nth-of-type(even) {
-      margin-right: 0;
-    }
-  }
-  
-  @media(min-width: 600px) {
-  
-    &:nth-of-type(even) {
-      margin-right: 2.5em;
-    }
-    
-    &:nth-of-type(5) {
-      margin-right: 0;
-    }
-    
-  }
-  
-  &:hover { text-decoration: none; }
-  
+  width: 100%;
 }
+.button-base:hover { text-decoration: none; }
 
 
 .footer-button {
@@ -59,11 +33,9 @@
 .footer-button:after,
 .footer-button:before {
   backface-visibility: hidden;
-  border: 0.01rem solid rgba(225, 225, 234, 0);;
-  bottom: 0px;
+  border: 0.01rem solid rgba(225, 225, 234, 0);
   content: " ";
   display: block;
-  margin: 0 auto;
   position: relative;
   transition: all 280ms ease-in-out;
   width: 9%;
@@ -78,7 +50,6 @@
 }
 
 .footer-button:hover:before {
-  bottom: auto;
   top: 0;
   width: 100%;
 }

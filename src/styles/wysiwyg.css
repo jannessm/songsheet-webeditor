@@ -1,5 +1,15 @@
-#previewRenderer{
+/*
 
+A4 is 297 x 210mm -> 44vw is the width => 210mm
+all entries in pdfMake json are in pt
+
+*/
+#previewRenderer{
+    background: white;
+    width: 44vw;
+    min-height: calc(44vw * 297 / 210);
+    padding: 5mm;
+    overflow: hidden;
 }
 #previewRenderer table {
     border-collapse: collapse;
@@ -19,8 +29,8 @@
      
 }
 #previewRenderer td {
-    width: 200px;
-    min-width:200px;
+    width: 200pt;
+    min-width: 200pt;
     text-align: left;
 }
 #previewRenderer td.content {
