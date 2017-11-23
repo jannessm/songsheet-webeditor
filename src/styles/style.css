@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono');
 .section--editor {
     position: relative;
     display: block;
@@ -33,11 +34,26 @@
     position: relative;
     top: 0;
     left: 0;
+    width: 90%;
     box-sizing: border-box;
+    padding: 5px 35px;
+    background: transparent;
+    color: #ddd;
+    -webkit-text-fill-color: transparent;
+}
+#highlighting_field{
     display: block;
+    position: absolute;
+    top: 0;
+    z-index: -1;
+    min-width: 90%;
+    min-height: 100%;
+    height: fit-content;
+    padding: 5px 35px;
+    box-sizing: border-box;
     background: #444;
     color: #ddd;
-    padding: 5px 35px;
+    letter-spacing: 0.2px;
 }
 #line-numbers{
     position: absolute;
@@ -54,8 +70,17 @@
     padding-top: 5px;
     padding-bottom: 4px;
     box-sizing: border-box;
+}
+.font_style{
     font-size: 11px;
     line-height: 18px;
+    font-style: normal;
+    font-weight: 400;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    letter-spacing: normal;
+    word-spacing: normal;
+    font-family: 'Roboto Mono', monospace;
 }
 
 textarea {
@@ -65,7 +90,6 @@ textarea {
     resize: none;
     border: none;
     overflow: hidden;
-    line-height: 18px;
 }
 
 #preview{

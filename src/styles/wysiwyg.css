@@ -10,6 +10,7 @@ all entries in pdfMake json are in pt
     min-height: calc(44vw * 297 / 210);
     padding: 5mm;
     overflow: hidden;
+    box-shadow: 0 0 10px 0 black;
 }
 #previewRenderer table {
     border-collapse: collapse;
