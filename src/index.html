@@ -24,26 +24,8 @@
     <script defer src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript"></script>
     <script defer src="./script/songsheet.js" type="text/javascript"></script>
     <script defer src="./script/wysiwyg.js" type="text/javascript"></script>
-    <script defer src="./script/linenumbers.js" type="text/javascript"></script>
-    <script type="text/javascript">
-        let songJson;
+    <script src="./script/editor.js" type="text/javascript"></script>
 
-        function generate(toPdf) {
-            let drawTable = document.getElementById("drawLines").checked;
-            let songsheetGen = new SongsheetGen();
-            let sheet = document.getElementById("editor").value;
-            songsheetGen.add_song(sheet, { table: drawTable, annotations: true });
-            songJson = songsheetGen.gen(toPdf);
-        }
-
-        function preview() {
-            let drawTable = document.getElementById("drawLines").checked;
-            generate(false);
-            let wysiwyg = new Wysiwyg(drawTable);
-            let preview = wysiwyg.convert(songJson);
-            document.getElementById("previewRenderer").innerHTML = preview;
-        }
-    </script>
 </head>
 
 <body>
@@ -76,12 +58,7 @@
     </div>
     <!-- Editor Section -->
     <section class="section--editor">
-        <div id="line-numbers" class="font_style">1</div>
-        <div id="highlighting_field" contenteditable="true" class="font_style editor"></div>
-        <textarea oninput="preview();update_line_numbers();copy_text_to_highlighting_area()"
-                  onkeypress="return autocompletion(event)"
-                  id="editor"
-                  class="font_style editor"></textarea>
+        <textarea oninput="preview()" id="editor" class="font_style editor"></textarea>
     </section>
 
     <!-- Preview Section -->
@@ -89,6 +66,32 @@
         <div id="previewRenderer" style="margin-top:10px">
         </div>
     </section>
+
+    <script type="text/javascript">
+        let songJson;
+
+        function generate(toPdf) {
+            let drawTable = document.getElementById("drawLines").checked;
+            let songsheetGen = new SongsheetGen();
+            let sheet = document.getElementById("editor").value;
+            songsheetGen.add_song(sheet, { table: drawTable, annotations: true });
+            songJson = songsheetGen.gen(toPdf);
+        }
+
+        function preview() {
+            let drawTable = document.getElementById("drawLines").checked;
+            generate(false);
+            let wysiwyg = new Wysiwyg(drawTable);
+            let preview = wysiwyg.convert(songJson);
+            document.getElementById("previewRenderer").innerHTML = preview;
+        }
+
+        //setup events of editor
+        let editor = new Editor(document.getElementById('editor'));
+        /*
+        * editor.get_text() can also be used to get the text of the textarea.
+        * */
+    </script>
 </body>
 
 </html>
