@@ -5,9 +5,10 @@ class Editor{
         let old_oninput = dom_elem.oninput ? dom_elem.oninput : function(){};
         let old_onkeypress = dom_elem.onkeypress ? dom_elem.onkeypress : function(){};
         let old_onkeydown = dom_elem.onkeydown ? dom_elem.onkeydown : function(){};
-        dom_elem.oninput = function(e){old_oninput(e); Editor.oninput();};
-        dom_elem.onkeypress = function(e){old_onkeypress(e); Editor.onkeypress(e);};
-        dom_elem.onkeydown = function(e){old_onkeydown(e); Editor.onkeydown(e);};
+
+        dom_elem.oninput = function(e){Editor.oninput(); old_oninput(e);};
+        dom_elem.onkeypress = function(e){Editor.onkeypress(e); old_onkeypress(e);};
+        dom_elem.onkeydown = function(e){Editor.onkeydown(e); old_onkeydown(e);};
 
         let line_numbers = document.createElement('div');
         line_numbers.id = 'line-numbers';
@@ -148,7 +149,8 @@ let entityMap = {
     "'": '&#39;',
     '/': '&#x2F;',
     '`': '&#x60;',
-    '=': '&#x3D;'
+    '=': '&#x3D;',
+    '|': '&#124;'
 };
 
 let syntax = {
@@ -216,7 +218,7 @@ let syntax = {
 };
 
 function escapeHtml (string) {
-    return String(string).replace(/[&<>"'`=\/]/g, function (s) {
+    return String(string).replace(/[&<>"'`=\/|]/g, function (s) {
         return entityMap[s];
     });
 }

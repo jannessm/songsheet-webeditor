@@ -1,56 +1,134 @@
 // Simple wysiwyg html generator for 
-// @Jannes Magnussons Songsheet library v. 1.0.0
+// @Jannes Magnussons Songsheet library v. 1.3.2
 // Requires the generated json object
-// Author Nils Rösel
+// Author Nils Rösel, Jannes Magnusson
 
 class Wysiwyg {
 
     constructor(drawLines) {
         this.drawLines = drawLines;
+        this.border_string = '1.5px solid black';
+        this.resolution = document.getElementById('previewRenderer').offsetWidth / 210 / 2.5; // divided by page width and convert to pt (1px = 1pt in pdf)
     }
 
     convert(json) {
         let html = '';
         let _content = json[0].content;
+
         if (typeof _content === 'undefined') {
             throw new Error('Json Content is Undefined')
         } else {
             // For each table
-            _content.forEach(_object => {
-                // Read the body attribute (also array)->indices are lines
+            _content.forEach(_table => {
+                html += this.parseTable(_table.table);
+            /*    // Read the body attribute (also array)->indices are lines
                 let rows = new Array(_object.table.body.length);
                 let i = 0;
+                console.log(_object.table)
                 _object.table.body.forEach(_lineObject => {
-                    // Now generate spans for the substrings
-                    let lineString = '';
-                    _lineObject.forEach(_stringObject => {
-                        if (_stringObject.text instanceof Array) {
-                            _stringObject.text.forEach(_textObject => {
-                                let stylings = '';
-                                stylings = this.createStyling(_textObject.italics,
-                                    _textObject.bold, _textObject.color,
-                                    _textObject.fontSize, _textObject.lineHeight);
-                                let text = this.setHtmlWhiteSpaces(_textObject.text);
-                                let spanElement = this.styleString(text, stylings);
-                                lineString = lineString + spanElement;
-                            });
-                        } else {
-                            let stylings = '';
-                            stylings = this.createStyling(_stringObject.italics,
-                                _stringObject.bold, _stringObject.color,
-                                _stringObject.fontSize, _stringObject.lineHeight);
-                            let text = this.setHtmlWhiteSpaces(_stringObject.text);
-                            let spanElement = this.styleString(text, stylings);
-                            lineString = lineString + spanElement;
+                    let lineString = '<tr>'; //start row
+                    _lineObject.forEach(_columns => {
+                        let column_style = '';
+                        let column_content = '';
+                        for(let prop in _columns){
+                            switch(prop){
+                                case 'columns':
+                                    let res = this.parseColumns(_columns.columns);
+                                    column_content += res[0];
+                                    column_style += res[1];
+                                    break;
+                                case 'border':
+                                    column_borders = this.parseBorder(_columns.border);
+                            }
                         }
+
+                        lineString += this.createRow(column_content, column_style);
                     });
+                    lineString += '</tr>'; //end row
+                    console.log(lineString);
                     rows[i] = this.generateTableRow(lineString);
                     i++;
                 });
-                html = html + this.generateTable(rows);
+                html = html + this.generateTable(rows);*/
             });
         }
         return html;
+    }
+
+    parseTable(table){
+        let widths = table.widths ||['*'];
+        let table_content = '<table>';
+        table.body.forEach(row => {
+            table_content += this.parseRow(row, widths);
+        });
+
+        return table_content+'</table>';
+    }
+
+    parseRow(row, widths){
+        let row_content = '<tr>';
+        for(let i in row){
+            row_content += this.parseColumn(row[i], widths[i]);
+        }
+        return row_content + '</tr>';
+    }
+
+    parseColumn(column, width){
+        let column_content = '';
+        let style = width !== '*' ? 'width: '+(width * this.resolution)+'px' : '';
+
+        for(let prop in column){
+            switch(prop){
+                case 'columns':
+                    column_content = this.parseColumnType(column.columns);
+                    break;
+                case 'border':
+                    style += this.parseBorder(column.border);
+            }
+        }
+        return '<td style="'+style+'">'+column_content+'</td>';
+    }
+
+    parseColumnType(columns){
+        let content = '';
+        for(let i in columns){
+            let column = columns[i];
+            if (column.text){
+                let stylings = '';
+                console.log(column);
+                stylings = this.createStyling(column);
+                let text = this.setHtmlWhiteSpaces(column.text);
+                content += this.createSpan(text, stylings);
+            }else if (column.image){
+                content += this.imageString(column.image, column.width);
+            }
+        }
+        return content;
+    }
+
+    parseBorder(border){
+        let borderString = '';
+        for(let id in border){
+            if(border[id]){
+                let direction = '';
+                switch (id){
+                    case '0':
+                        direction = '-left';
+                        break;
+                    case '1':
+                        direction = '-top';
+                        break;
+                    case '2':
+                        direction = '-right';
+                        break;
+                    case '3':
+                        direction = '-bottom';
+                        break;
+                }
+                borderString += 'border'+direction+':'+this.border_string+';';
+            }
+        }
+        return borderString
     }
 
     generateTable(stringRowArray) {
@@ -68,53 +146,45 @@ class Wysiwyg {
         return table;
     }
 
-    generateTableRow(styledString) {
-        let stringBuilder = '';
-        stringBuilder = '<tr><td class ="content">';
-        stringBuilder = stringBuilder + styledString;
-        if (this.drawLines === true) {
-            stringBuilder = stringBuilder + `</td><td class="draw-lines"><tab></td>
-                            <td><tab></td></tr>`
-        }
-        else {
-            stringBuilder = stringBuilder + '</td><td><tab></td><td><tab></td></tr>'
-        }
-        return stringBuilder;
+    createRow(content, styles){
+        return '<td style="'+styles+'">'+content+'</td>';
     }
 
-    styleString(string, styles) {
-        let htmlBuilder = '';
-        htmlBuilder = '<span style="' + styles + '">';
-        htmlBuilder = htmlBuilder + string + '</span>';
-        return htmlBuilder;
+    createSpan(content, styles) {
+        return '<span style="' + styles + '">' + content + '</span>';
     }
 
-    createStyling(isItalic, isBold, color, fontSize, lineHeight) {
+    createStyling(column) {
         let stringBuilder = '';
-        if (isItalic === true) {
+        if (column.isItalic === true) {
             stringBuilder = stringBuilder + 'font-style:italic;';
         }
-        if (isBold === true) {
+        if (column.isBold === true) {
             stringBuilder = stringBuilder + 'font-weight: bold;';
         }
-        if (typeof color !== 'undefined') {
-            stringBuilder = stringBuilder + 'color:' + color + ';';
+        if (typeof column.color !== 'undefined') {
+            stringBuilder = stringBuilder + 'color:' + column.color + ';';
         }
-        if (typeof fontSize === 'number') {
-            stringBuilder = stringBuilder + 'font-size:' + fontSize + ';';
+        if (typeof column.fontSize === 'number') {
+            stringBuilder = stringBuilder + 'font-size:' + (column.fontSize * this.resolution) + 'px;';
         }
-        if (typeof lineHeight === 'number') {
-            stringBuilder = stringBuilder + 'line-height:' + lineHeight + ';';
+        if (typeof column.lineHeight === 'number') {
+            stringBuilder = stringBuilder + 'line-height:' + (column.lineHeight) + ';';
+        }
+        if (column.margin !== undefined){
+            //stringBuilder += 'margin:'+column.margin[1]+'px '+column.margin[0]+'px;'; //TODO not working yet
         }
         return stringBuilder;
+    }
+
+    imageString(source, width){
+        return '<img src="'+source+'" width="'+width+'">';
     }
 
     setHtmlWhiteSpaces(string) {
         let whiteSpace = '&nbsp;';
         return string.replace(/\s/g, whiteSpace);
     }
-
-
 
 
 
