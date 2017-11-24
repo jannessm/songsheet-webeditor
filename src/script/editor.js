@@ -20,6 +20,8 @@ class Editor{
         highlighting_field.className = "font_style editor";
         highlighting_field.contentEditable = true;
         dom_elem.parentNode.insertBefore(highlighting_field, dom_elem.parentNode.childNodes[0]);
+
+        dom_elem.oninput();
     }
 
     get_input(){
@@ -178,16 +180,37 @@ let syntax = {
         replace: '<span style="color: green">$&</span>'
     },
     blocks: {
-        regex: /((\[.*:)(.*)(\])|(\[)(.*)(\]))/g,
-        replace: function (match, p1, p2, p3, p4, p5, p6, p7){
-            if(p4 !== undefined) {
-                return '<span style="color: grey">' + p2 + '</span>' +
-                    '<span style="color: darkorange">' + p3 + '</span>' +
-                    '<span style="color: grey">' + p4 + '</span>';
-            }else
-                return '<span style="color: grey">' + p5 + '</span>' +
-                    '<span style="color: darkorange">' + p6 + '</span>' +
-                    '<span style="color: grey">' + p7 + '</span>';
+        regex: /(\[)(.*?)(\])/g,
+        replace: function (match){
+            let out = '<span style="color: grey">';
+            for(let char in match){
+                char = match.charAt(char);
+
+                // if match has :
+                if(match.indexOf(':') > 0){
+                    if(char === ';' || char === ']'){
+                        out += '</span><span style="color: grey">';
+                    }
+                    out += char;
+                    // change color
+                    switch(char){
+                        case ']':
+                            out += '</span>';
+                            break;
+                        case ':':
+                            out += '</span><span style="color: darkorange">';
+                            break;
+                    }
+                }else{
+                    if(char === '[')
+                        out += char + '</span><span style="color: darkorange">';
+                    else if(char === ']')
+                        out += '</span><span style="color: grey">'+char+'</span>';
+                    else
+                        out += char;
+                }
+            }
+            return out;
         }
     }
 };
