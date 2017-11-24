@@ -30,30 +30,42 @@
     font-weight: bold;
 }
 
+textarea {
+    resize: none;
+    border: none;
+    overflow: hidden;
+}
+.editor{
+    width: 100%;
+    min-height: 100%;
+    height: fit-content;
+    box-sizing: border-box;
+    color: #ddd;
+}
 #editor{
     position: relative;
     top: 0;
     left: 0;
-    width: 90%;
-    box-sizing: border-box;
+    width: calc(100% + 21px); /* div was always 21px bigger in width... */
     padding: 5px 35px;
     background: transparent;
-    color: #ddd;
     -webkit-text-fill-color: transparent;
+}
+#editor:focus{
+    border: none;
+    box-shadow: none;
+    outline: none;
 }
 #highlighting_field{
     display: block;
     position: absolute;
     top: 0;
     z-index: -1;
-    min-width: 90%;
-    min-height: 100%;
-    height: fit-content;
-    padding: 5px 35px;
-    box-sizing: border-box;
+    padding: 5px 35px 13px;
     background: #444;
-    color: #ddd;
-    letter-spacing: 0.2px;
+}
+#highlighting_field b{
+    letter-spacing: -1px;
 }
 #line-numbers{
     position: absolute;
@@ -81,15 +93,6 @@
     letter-spacing: normal;
     word-spacing: normal;
     font-family: 'Roboto Mono', monospace;
-}
-
-textarea {
-    width: 100%;
-    min-height: 100%;
-    height: fit-content;
-    resize: none;
-    border: none;
-    overflow: hidden;
 }
 
 #preview{

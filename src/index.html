@@ -77,11 +77,11 @@
     <!-- Editor Section -->
     <section class="section--editor">
         <div id="line-numbers" class="font_style">1</div>
-        <div id="highlighting_field" contenteditable="true" class="font_style"></div>
+        <div id="highlighting_field" contenteditable="true" class="font_style editor"></div>
         <textarea oninput="preview();update_line_numbers();copy_text_to_highlighting_area()"
                   onkeypress="return autocompletion(event)"
                   id="editor"
-                  class="font_style"></textarea>
+                  class="font_style editor"></textarea>
     </section>
 
     <!-- Preview Section -->
