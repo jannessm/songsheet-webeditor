@@ -21,35 +21,6 @@ class Wysiwyg {
             // For each table
             _content.forEach(_table => {
                 html += this.parseTable(_table.table);
-            /*    // Read the body attribute (also array)->indices are lines
-                let rows = new Array(_object.table.body.length);
-                let i = 0;
-                console.log(_object.table)
-                _object.table.body.forEach(_lineObject => {
-                    let lineString = '<tr>'; //start row
-                    _lineObject.forEach(_columns => {
-                        let column_style = '';
-                        let column_content = '';
-                        for(let prop in _columns){
-                            switch(prop){
-                                case 'columns':
-                                    let res = this.parseColumns(_columns.columns);
-                                    column_content += res[0];
-                                    column_style += res[1];
-                                    break;
-                                case 'border':
-                                    column_borders = this.parseBorder(_columns.border);
-                            }
-                        }
-
-                        lineString += this.createRow(column_content, column_style);
-                    });
-                    lineString += '</tr>'; //end row
-                    console.log(lineString);
-                    rows[i] = this.generateTableRow(lineString);
-                    i++;
-                });
-                html = html + this.generateTable(rows);*/
             });
         }
         return html;
@@ -67,6 +38,8 @@ class Wysiwyg {
 
     parseRow(row, widths){
         let row_content = '<tr>';
+        if (row.length === 0)
+            row.push({text: " "});
         for(let i in row){
             row_content += this.parseColumn(row[i], widths[i]);
         }
@@ -77,14 +50,21 @@ class Wysiwyg {
         let column_content = '';
         let style = width !== '*' ? 'width: '+(width * this.resolution)+'px' : '';
 
-        for(let prop in column){
-            switch(prop){
-                case 'columns':
-                    column_content = this.parseColumnType(column.columns);
-                    break;
-                case 'border':
-                    style += this.parseBorder(column.border);
+        if (column.columns){
+            for(let prop in column){
+                switch(prop){
+                    case 'columns':
+                        column_content = this.parseColumnType(column.columns);
+                        break;
+                    case 'border':
+                        style += this.parseBorder(column.border);
+                }
             }
+        }else if (column.text){
+            let stylings = '';
+            stylings = this.createStyling(column);
+            let text = this.setHtmlWhiteSpaces(column.text);
+            column_content += this.createSpan(text, stylings);
         }
         return '<td style="'+style+'">'+column_content+'</td>';
     }
@@ -95,7 +75,6 @@ class Wysiwyg {
             let column = columns[i];
             if (column.text){
                 let stylings = '';
-                console.log(column);
                 stylings = this.createStyling(column);
                 let text = this.setHtmlWhiteSpaces(column.text);
                 content += this.createSpan(text, stylings);
@@ -151,7 +130,9 @@ class Wysiwyg {
     }
 
     createSpan(content, styles) {
-        return '<span style="' + styles + '">' + content + '</span>';
+        if(content === '' || content === ' ')
+            content = '&nbsp;';
+        return '<div style="display: inline-block;' + styles + '">' + content + '</div>';
     }
 
     createStyling(column) {
@@ -172,13 +153,13 @@ class Wysiwyg {
             stringBuilder = stringBuilder + 'line-height:' + (column.lineHeight) + ';';
         }
         if (column.margin !== undefined){
-            //stringBuilder += 'margin:'+column.margin[1]+'px '+column.margin[0]+'px;'; //TODO not working yet
+            stringBuilder += 'margin:'+column.margin[1]+'px '+column.margin[0]+'px;';
         }
         return stringBuilder;
     }
 
     imageString(source, width){
-        return '<img src="'+source+'" width="'+width+'">';
+        return '<img src="'+source+'" width="'+(width * this.resolution)+'">';
     }
 
     setHtmlWhiteSpaces(string) {
