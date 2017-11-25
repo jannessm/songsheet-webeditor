@@ -18,10 +18,10 @@
     <link rel="stylesheet" type="text/css" href="./styles/wysiwyg.css">
     <link rel="stylesheet" type="text/css" href="./styles/scrollbar.css">
     <link rel="stylesheet" type="text/css" href="./styles/standart-elements.css">
+    <link rel="stylesheet" type="text/css" href="./styles/fonts.css">
 
 
     <!-- Load scripts -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript"></script>
     <script src="./script/songsheet.min.js" type="text/javascript"></script>
     <script src="./script/wysiwyg.js" type="text/javascript"></script>
     <script src="./script/editor.js" type="text/javascript"></script>
@@ -43,9 +43,7 @@
 
         <label>
             Select Font: 
-            <select onchange="preview()" class="control-element">
-                <option value="font1" selected>Font1</option>
-                <option value="font2">Font2</option>
+            <select onchange="preview()" class="control-element" id="font_select">
             </select>
         </label>
         
@@ -58,20 +56,36 @@
     </div>
     <!-- Editor Section -->
     <section class="section--editor">
-        <textarea oninput="preview()" id="editor" class="font_style editor">[Title: Wonderwall - Oasis; bpm: 100]
+        <textarea oninput="preview()" id="editor" class="font_style editor">[TITLE:How great is our god; bpm: 100]
 
-      [Order: Intro, Verse 1, Verse 2, Verse 1]
+[ORDER:Intro,Str 1,Ref,Str 2,Ref, Bridge, Ref, Ref]
 
-      [Block : Verse 1]
-      [Em7] Today is [G]gonna be the day | annotation
-      That they're [Dsus4]gonna throw it back to [A7sus4]you
+[block: Intro]
+[G] [Em7] [C] [D] [G]
 
-      [Block : Verse 2]
-      [Em7] Back beat, the [G]word is on the street
-      That the [Dsus4]fire in your heart is [A7sus4]out,
+[BLOCK: Str 1]
+The *[G]sple<r>ndor* of <b>the Kin<r>g, [Em7]clo**thed in<r> ma**jesty
+Let all the earth re[C]joice, All the earth re[D]joice | so sehen | annotationen aus
+He [G]wraps himself in Light, and [Em7]darkness tries to hide
+And trembles at His [C]voice, Trembles at His [D]voice
 
-      [Block : Intro]
-      [Em7] [G] [Dsus4] [A7sus4]
+[BLOCK: Ref]
+How [G]great is our God, sing with me       | test1     ;   test2; test3; test4; test5 | always
+How [Em7]great is our God, and all will see
+How [Cmaj7]great, how [D]great is our [G]God
+
+[BLOCK: Str 2]
+[G]Age to age He stands, and [Em7]time is in His hands
+Beginning and the [C]end, Beginning and the [D]end
+The [G]Godhead Three in One, [Em7]Father Spirit Son
+The [C]Lion and the Lamb, The [D]Lion and the Lamb
+
+[bLoCk: Bridge]
+[G]Name above all names, [Em7]Worthy of our praise
+My [Cmaj7]heart will sing, How [D]great is our [G]God
+
+
+
 </textarea>
     </section>
 
@@ -88,7 +102,14 @@
             let drawTable = document.getElementById("drawLines").checked;
             let songsheetGen = new SongsheetGen();
             let sheet = document.getElementById("editor").value;
-            songsheetGen.add_song(sheet, { table: drawTable, annotations: true });
+
+            // set font
+            let font_select = document.getElementById('font_select');
+            let font = undefined;
+            if(font_select.options[font_select.selectedIndex])
+                font = font_select.options[font_select.selectedIndex].value;
+
+            songsheetGen.add_song(sheet, { table: drawTable, annotations: true , font: font});
             songJson = songsheetGen.gen(toPdf);
         }
 
@@ -105,6 +126,17 @@
         /*
         * editor.get_text() can also be used to get the text of the textarea.
         * */
+
+        // update font selector
+        for(let font in new SongsheetGen().get_available_fonts()){
+            let new_option = document.createElement('option');
+            new_option.text = font;
+            new_option.value = font;
+            document.getElementById('font_select').add(new_option);
+            if(font === 'ubuntu')
+                new_option.selected = true;
+            preview();
+        }
     </script>
 </body>
 

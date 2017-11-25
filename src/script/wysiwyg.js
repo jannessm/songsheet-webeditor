@@ -158,6 +158,9 @@ class Wysiwyg {
         if (column.margin !== undefined){
             stringBuilder += 'margin:'+column.margin[1]+'px '+column.margin[0]+'px;';
         }
+        if (column.font){
+            stringBuilder += 'font-family:'+column.font+', monospaced;';
+        }
         return stringBuilder;
     }
 
