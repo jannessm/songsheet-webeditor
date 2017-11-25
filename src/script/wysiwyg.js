@@ -40,6 +40,7 @@ class Wysiwyg {
         let row_content = '<tr>';
         if (row.length === 0)
             row.push({text: " "});
+
         for(let i in row){
             row_content += this.parseColumn(row[i], widths[i]);
         }
@@ -48,8 +49,7 @@ class Wysiwyg {
 
     parseColumn(column, width){
         let column_content = '';
-        let style = width !== '*' ? 'width: '+(width * this.resolution)+'px' : '';
-
+        let style = width !== '*' ? 'width: '+(width * this.resolution)+'px;' : '';
         if (column.columns){
             for(let prop in column){
                 switch(prop){
@@ -60,11 +60,14 @@ class Wysiwyg {
                         style += this.parseBorder(column.border);
                 }
             }
-        }else if (column.text){
+        }else if (column.text !== undefined){
             let stylings = '';
             stylings = this.createStyling(column);
             let text = this.setHtmlWhiteSpaces(column.text);
             column_content += this.createSpan(text, stylings);
+
+            if(column.border)
+                style += this.parseBorder(column.border);
         }
         return '<td style="'+style+'">'+column_content+'</td>';
     }
