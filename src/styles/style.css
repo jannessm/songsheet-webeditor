@@ -11,6 +11,7 @@
     background: #eee;
     padding: 20px;
     box-sizing: border-box;
+    position: relative;
 }
 
 #title_logo{
@@ -108,6 +109,25 @@ textarea {
     overflow-y: auto;
     overflow-x: hidden;
     resize: horizontal;
+}
+
+#help{
+    position: absolute;
+    z-index: 100;
+    top: 30px;
+    left: 30px;
+    width: 80%;
+    border-radius: 20px;
+    min-height: 100%;
+    height: fit-content;
+    padding: 40px;
+    transition: 0.5s all;
+    background: rgba(250,250,100,0.7);
+}
+#help code{
+    padding: 3px;
+    background: lightgrey;
+    margin: 2px;
 }
 
 .standard--tab{

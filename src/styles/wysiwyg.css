@@ -12,6 +12,7 @@ all entries in pdfMake json are in pt
     overflow: hidden;
     box-shadow: 0 0 10px 0 black;
     box-sizing: border-box;
+    transition: 0.5s all;
 }
 #previewRenderer table {
     border-collapse: collapse;
