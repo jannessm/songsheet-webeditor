@@ -20,15 +20,15 @@ class Wysiwyg {
         } else {
             // For each table
             _content.forEach(_table => {
-                html += this.parseTable(_table.table);
+                html += this.parseTable(_table.table, json[0].defaultStyle.font);
             });
         }
         return html;
     }
 
-    parseTable(table){
+    parseTable(table, font){
         let widths = table.widths ||['*'];
-        let table_content = '<table>';
+        let table_content = '<table style="font-family: '+font+', monospaced;">';
         table.body.forEach(row => {
             table_content += this.parseRow(row, widths);
         });
