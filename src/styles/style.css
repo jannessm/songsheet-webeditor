@@ -116,13 +116,14 @@ textarea {
     z-index: 100;
     top: 30px;
     left: 30px;
-    width: 80%;
+    width: 41vw;
     border-radius: 20px;
     min-height: 100%;
     height: fit-content;
     padding: 40px;
     transition: 0.5s all;
     background: rgba(250,250,100,0.7);
+    box-shadow: 0 0 10px 0 grey;
 }
 #help code{
     padding: 3px;
