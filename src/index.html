@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- for FF, Chrome, Opera -->
+    <link rel="icon" type="image/png" href="./asset/logo-16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="./asset/logo-32.png" sizes="32x32">
+
+    <!-- for IE -->
+    <link rel="icon" type="image/x-icon" href="./asset/logo.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="./asset/logo.ico" />
+
+    <title>B.and Songsheet Editor</title>
+
+    <!-- Load Styles -->
+    <link rel="stylesheet" type="text/css" href="./styles/style.css">
+    <link rel="stylesheet" type="text/css" href="./styles/buttons.css">
+    <link rel="stylesheet" type="text/css" href="./styles/wysiwyg.css">
+    <link rel="stylesheet" type="text/css" href="./styles/scrollbar.css">
+    <link rel="stylesheet" type="text/css" href="./styles/standart-elements.css">
+    <link rel="stylesheet" type="text/css" href="./styles/fonts.css">
+
+
+    <!-- Load scripts -->
+    <script src="./script/songsheet.min.js" type="text/javascript"></script>
+    <script src="./script/wysiwyg.js" type="text/javascript"></script>
+    <script src="./script/editor.js" type="text/javascript"></script>
+    <script src="./script/utils.js" type="text/javascript"></script>
+</head>
+
+<body onload="onload()">
+    <div id="title_logo">
+        <span style="position: absolute; padding-top: 10px;">Songsheet</span>
+        <img src="asset/logo.svg">
+        <span style="float:right; padding-top: 10px">Editor</span>
+    </div>
+
+    <div class="standard--tab">
+        <label>
+            <input checked onchange="preview()" id="drawLines" type="checkbox" class="control-element">
+             Draw Table
+        </label>
+
+        <label>
+            Select Font: 
+            <select onchange="preview()" class="control-element" id="font_select">
+            </select>
+        </label>
+        
+        <label style="float: right; margin-right: 50px" class="control-element">
+                <a onclick="generate()" class="button-base footer-button">Download PDF</a>
+        </label>
+        <label style="float: right; margin-right: 20px" class="control-element">
+            <a onclick="save()" class="button-base footer-button">Download .st</a>
+        </label>
+        <label style="float: right; margin-right: 20px" class="control-element">
+            <a id="get_file" class="button-base footer-button">Open</a>
+            <input id="file_input" type="file" style="display: none" onchange="openFile(this.files)" onclick="this.value=null;">
+        </label>
+        <label style="float: right; margin-right: 50px" class="control-element">
+            <a onclick="toggle_help()" class="button-base footer-button">How to</a>
+        </label>
+    </div>
+    <!-- Editor Section -->
+    <section class="section--editor">
+        <textarea oninput="preview()" id="editor" class="font_style editor"></textarea>
+    </section>
+
+    <!-- Preview Section -->
+    <section class="section--preview">
+        <div id="previewRenderer" style="margin-top:10px"></div>
+        <div id="help" style="opacity: 0;"></div>
+    </section>
+    <footer><b><span style="float: right">created By Jannes Magnusson, Niels Rösel</span></b></footer>
+
+    <script type="text/javascript">
+        let songJson;
+
+        function generate(toPdf) {
+            let drawTable = document.getElementById("drawLines").checked;
+            let songsheetGen = new SongsheetGen();
+            let sheet = document.getElementById("editor").value;
+
+            // set font
+            let font_select = document.getElementById('font_select');
+            let font = undefined;
+            if(font_select.options[font_select.selectedIndex]){
+                font = font_select.options[font_select.selectedIndex].value;
+            }
+
+            songsheetGen.add_song(sheet, { table: drawTable, annotations: true , font: font});
+            songJson = songsheetGen.gen(toPdf);
+        }
+
+        function preview() {
+            let drawTable = document.getElementById("drawLines").checked;
+            generate(false);
+            let wysiwyg = new Wysiwyg(drawTable);
+            let preview = wysiwyg.convert(songJson);
+            document.getElementById("previewRenderer").innerHTML = preview;
+        }
+
+        //setup events of editor
+        let editor = new Editor(document.getElementById('editor'));
+        /*
+        * editor.get_text() can also be used to get the text of the textarea.
+        * */
+
+        // update font selector
+        for(let font in new SongsheetGen().get_available_fonts()){
+            let new_option = document.createElement('option');
+            new_option.text = font;
+            new_option.value = font;
+            document.getElementById('font_select').add(new_option);
+            if(font === 'ubuntu')
+                new_option.selected = true;
+            preview();
+        }
+    </script>
+</body>
+
+</html>

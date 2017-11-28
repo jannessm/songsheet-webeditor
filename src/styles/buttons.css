@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400');
+.button-base {
+  box-sizing: border-box;
+  transition-property: all;
+  transition-duration: .2s;
+  transition-timing-function: ease;
+
+  color: #3B3B3B;
+  cursor: pointer;
+  display: block;
+  font-size: 18px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight:  300;
+  position: relative;
+  text-decoration: none;
+  vertical-align: middle;
+  width: 100%;
+}
+.button-base:hover { text-decoration: none; }
+
+
+.footer-button {
+    letter-spacing: 0;
+    font-weight:  300;
+}
+
+.footer-button:hover,
+.footer-button:active {
+  letter-spacing: 2px;
+  font-weight:  400;
+}
+
+.footer-button:after,
+.footer-button:before {
+  backface-visibility: hidden;
+  border: 0.01rem solid rgba(225, 225, 234, 0);
+  content: " ";
+  display: block;
+  position: relative;
+  transition: all 280ms ease-in-out;
+  width: 9%;
+}
+
+.footer-button:hover:after,
+.footer-button:hover:before {
+  backface-visibility: hidden;
+  border-color: #3B3B3B;
+  transition: width 350ms ease-in-out;
+  width: 100%;
+}
+
+.footer-button:hover:before {
+  top: 0;
+  width: 100%;
+}
