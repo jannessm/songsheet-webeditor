@@ -38,11 +38,11 @@
     <div class="standard--tab">
         <label>
             <input checked onchange="preview()" id="drawLines" type="checkbox" class="control-element">
-             Draw Table
+             Tabellenlinien
         </label>
 
         <label>
-            Select Font: 
+            Schriftart:
             <select onchange="preview()" class="control-element" id="font_select">
             </select>
         </label>
@@ -54,7 +54,7 @@
             <a onclick="save()" class="button-base footer-button">Download .st</a>
         </label>
         <label style="float: right; margin-right: 20px" class="control-element">
-            <a id="get_file" class="button-base footer-button">Open</a>
+            <a id="get_file" class="button-base footer-button">&Ouml;ffnen</a>
             <input id="file_input" type="file" style="display: none" onchange="openFile(this.files)" onclick="this.value=null;">
         </label>
         <label style="float: right; margin-right: 50px" class="control-element">
@@ -71,7 +71,7 @@
         <div id="previewRenderer" style="margin-top:10px"></div>
         <div id="help" style="opacity: 0;"></div>
     </section>
-    <footer><b><span style="float: right">created By Jannes Magnusson, Niels Rösel</span></b></footer>
+    <footer><b><span style="float: right">created By Jannes Magnusson, Niels Rösel</span></b> v1.0.0</footer>
 
     <script type="text/javascript">
         let songJson;
