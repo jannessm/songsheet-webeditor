@@ -18,17 +18,17 @@
     <link rel="stylesheet" type="text/css" href="./styles/wysiwyg.css">
     <link rel="stylesheet" type="text/css" href="./styles/scrollbar.css">
     <link rel="stylesheet" type="text/css" href="./styles/standart-elements.css">
+    <link rel="stylesheet" type="text/css" href="./styles/fonts.css">
 
 
     <!-- Load scripts -->
-    <script defer src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript"></script>
-    <script defer src="./script/songsheet.js" type="text/javascript"></script>
-    <script defer src="./script/wysiwyg.js" type="text/javascript"></script>
+    <script src="./script/songsheet.min.js" type="text/javascript"></script>
+    <script src="./script/wysiwyg.js" type="text/javascript"></script>
     <script src="./script/editor.js" type="text/javascript"></script>
-
+    <script src="./script/utils.js" type="text/javascript"></script>
 </head>
 
-<body>
+<body onload="onload()">
     <div id="title_logo">
         <span style="position: absolute; padding-top: 10px;">Songsheet</span>
         <img src="asset/logo.svg">
@@ -43,9 +43,7 @@
 
         <label>
             Select Font: 
-            <select onchange="preview()" class="control-element">
-                <option value="font1" selected>Font1</option>
-                <option value="font2">Font2</option>
+            <select onchange="preview()" class="control-element" id="font_select">
             </select>
         </label>
         
@@ -53,7 +51,14 @@
                 <a onclick="generate()" class="button-base footer-button">Download PDF</a>
         </label>
         <label style="float: right; margin-right: 20px" class="control-element">
-            <a onclick="download_file" class="button-base footer-button">Download .st</a>
+            <a onclick="save()" class="button-base footer-button">Download .st</a>
+        </label>
+        <label style="float: right; margin-right: 20px" class="control-element">
+            <a id="get_file" class="button-base footer-button">Open</a>
+            <input id="file_input" type="file" style="display: none" onchange="openFile(this.files)" onclick="this.value=null;">
+        </label>
+        <label style="float: right; margin-right: 50px" class="control-element">
+            <a onclick="toggle_help()" class="button-base footer-button">How to</a>
         </label>
     </div>
     <!-- Editor Section -->
@@ -63,9 +68,10 @@
 
     <!-- Preview Section -->
     <section class="section--preview">
-        <div id="previewRenderer" style="margin-top:10px">
-        </div>
+        <div id="previewRenderer" style="margin-top:10px"></div>
+        <div id="help" style="opacity: 0;"></div>
     </section>
+    <footer><b><span style="float: right">created By Jannes Magnusson, Niels Rösel</span></b></footer>
 
     <script type="text/javascript">
         let songJson;
@@ -74,7 +80,15 @@
             let drawTable = document.getElementById("drawLines").checked;
             let songsheetGen = new SongsheetGen();
             let sheet = document.getElementById("editor").value;
-            songsheetGen.add_song(sheet, { table: drawTable, annotations: true });
+
+            // set font
+            let font_select = document.getElementById('font_select');
+            let font = undefined;
+            if(font_select.options[font_select.selectedIndex]){
+                font = font_select.options[font_select.selectedIndex].value;
+            }
+
+            songsheetGen.add_song(sheet, { table: drawTable, annotations: true , font: font});
             songJson = songsheetGen.gen(toPdf);
         }
 
@@ -91,6 +105,17 @@
         /*
         * editor.get_text() can also be used to get the text of the textarea.
         * */
+
+        // update font selector
+        for(let font in new SongsheetGen().get_available_fonts()){
+            let new_option = document.createElement('option');
+            new_option.text = font;
+            new_option.value = font;
+            document.getElementById('font_select').add(new_option);
+            if(font === 'ubuntu')
+                new_option.selected = true;
+            preview();
+        }
     </script>
 </body>
 

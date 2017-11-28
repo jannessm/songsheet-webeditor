@@ -5,9 +5,10 @@ class Editor{
         let old_oninput = dom_elem.oninput ? dom_elem.oninput : function(){};
         let old_onkeypress = dom_elem.onkeypress ? dom_elem.onkeypress : function(){};
         let old_onkeydown = dom_elem.onkeydown ? dom_elem.onkeydown : function(){};
-        dom_elem.oninput = function(e){old_oninput(e); Editor.oninput();};
-        dom_elem.onkeypress = function(e){old_onkeypress(e); Editor.onkeypress(e);};
-        dom_elem.onkeydown = function(e){old_onkeydown(e); Editor.onkeydown(e);};
+
+        dom_elem.oninput = function(e){Editor.oninput(); old_oninput(e);};
+        dom_elem.onkeypress = function(e){Editor.onkeypress(e); old_onkeypress(e);};
+        dom_elem.onkeydown = function(e){Editor.onkeydown(e); old_onkeydown(e);};
 
         let line_numbers = document.createElement('div');
         line_numbers.id = 'line-numbers';
@@ -20,6 +21,8 @@ class Editor{
         highlighting_field.className = "font_style editor";
         highlighting_field.contentEditable = true;
         dom_elem.parentNode.insertBefore(highlighting_field, dom_elem.parentNode.childNodes[0]);
+
+        dom_elem.oninput();
     }
 
     get_input(){
@@ -146,7 +149,8 @@ let entityMap = {
     "'": '&#39;',
     '/': '&#x2F;',
     '`': '&#x60;',
-    '=': '&#x3D;'
+    '=': '&#x3D;',
+    '|': '&#124;'
 };
 
 let syntax = {
@@ -178,22 +182,43 @@ let syntax = {
         replace: '<span style="color: green">$&</span>'
     },
     blocks: {
-        regex: /((\[.*:)(.*)(\])|(\[)(.*)(\]))/g,
-        replace: function (match, p1, p2, p3, p4, p5, p6, p7){
-            if(p4 !== undefined) {
-                return '<span style="color: grey">' + p2 + '</span>' +
-                    '<span style="color: darkorange">' + p3 + '</span>' +
-                    '<span style="color: grey">' + p4 + '</span>';
-            }else
-                return '<span style="color: grey">' + p5 + '</span>' +
-                    '<span style="color: darkorange">' + p6 + '</span>' +
-                    '<span style="color: grey">' + p7 + '</span>';
+        regex: /(\[)(.*?)(\])/g,
+        replace: function (match){
+            let out = '<span style="color: grey">';
+            for(let char in match){
+                char = match.charAt(char);
+
+                // if match has :
+                if(match.indexOf(':') > 0){
+                    if(char === ';' || char === ']'){
+                        out += '</span><span style="color: grey">';
+                    }
+                    out += char;
+                    // change color
+                    switch(char){
+                        case ']':
+                            out += '</span>';
+                            break;
+                        case ':':
+                            out += '</span><span style="color: darkorange">';
+                            break;
+                    }
+                }else{
+                    if(char === '[')
+                        out += char + '</span><span style="color: darkorange">';
+                    else if(char === ']')
+                        out += '</span><span style="color: grey">'+char+'</span>';
+                    else
+                        out += char;
+                }
+            }
+            return out;
         }
     }
 };
 
 function escapeHtml (string) {
-    return String(string).replace(/[&<>"'`=\/]/g, function (s) {
+    return String(string).replace(/[&<>"'`=\/|]/g, function (s) {
         return entityMap[s];
     });
 }

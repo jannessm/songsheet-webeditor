@@ -6,39 +6,20 @@ all entries in pdfMake json are in pt
 */
 #previewRenderer{
     background: white;
-    width: 44vw;
-    min-height: calc(44vw * 297 / 210);
-    padding: 5mm;
+    width: 47vw;
+    min-height: calc(47vw * 297 / 210);
+    padding: calc(47vw / 210 * 15);
     overflow: hidden;
     box-shadow: 0 0 10px 0 black;
+    box-sizing: border-box;
+    transition: 0.5s all;
 }
 #previewRenderer table {
     border-collapse: collapse;
-}
-#previewRenderer .draw-lines:first-child {
-    border: 1px solid black;
-}
-#previewRenderer table.draw-lines {
-    border-bottom: 1px solid black;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-   
-}
-#previewRenderer td.draw-lines {
-    border-right: 1px solid black;
-    border-left: 1px solid black;
-     
+    width: 100%;
 }
 #previewRenderer td {
-    width: 200pt;
-    min-width: 200pt;
-    text-align: left;
-}
-#previewRenderer td.content {
-    width: 450px;
-    min-width: 450px;
-    text-align: left;
-    padding-left: 8px;
-    padding-top: 2px;
-    padding-bottom: 2px;
+    vertical-align: top;
+    padding: 2px;
+    box-sizing: border-box;
 }
