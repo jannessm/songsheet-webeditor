@@ -5,10 +5,12 @@ class Editor{
         let old_oninput = dom_elem.oninput ? dom_elem.oninput : function(){};
         let old_onkeypress = dom_elem.onkeypress ? dom_elem.onkeypress : function(){};
         let old_onkeydown = dom_elem.onkeydown ? dom_elem.onkeydown : function(){};
+        let old_onkeyup = dom_elem.onkeyup ? dom_elem.onkeyup : function(){};
 
         dom_elem.oninput = function(e){Editor.oninput(); old_oninput(e);};
         dom_elem.onkeypress = function(e){Editor.onkeypress(e); old_onkeypress(e);};
         dom_elem.onkeydown = function(e){Editor.onkeydown(e); old_onkeydown(e);};
+        dom_elem.onkeyup = function(e){Editor.onkeyup(e); old_onkeyup(e)};
 
         let line_numbers = document.createElement('div');
         line_numbers.id = 'line-numbers';
@@ -36,10 +38,17 @@ class Editor{
 
     static onkeypress(e){
         autocompletion(e);
+        copy_text_to_highlighting_area();
     }
 
     static onkeydown(e){
         backspace(e);
+    }
+
+    static onkeyup(e){
+        console.log(e.keyCode);
+        if((e.keyCode | e.charCode) === 17)
+            ctrl = false;
     }
 }
 
@@ -61,10 +70,11 @@ function update_line_numbers() {
     document.getElementById('editor').style.height = new_height+'px';
 }
 
-let no_backspace = true;
+let ctrl = false;
+let do_autocompletion = true;
 
 function autocompletion(e) {
-    if(no_backspace){
+    if(do_autocompletion){
         let text = document.getElementById('editor').value;
         let char_pos = document.getElementById('editor').selectionStart;
         let key;
@@ -93,13 +103,47 @@ function autocompletion(e) {
 }
 
 function backspace(e){
+
+    do_autocompletion = false;
+
+    //if ctrl was pressed and not released do nothing
+    if((e.keyCode || e.charCode) === 17){
+      ctrl = true;
+      return;
+    }
+
+    let text = document.getElementById('editor').value;
+    let char_pos = document.getElementById('editor').selectionStart;
+    let char_pos_end = document.getElementById('editor').selectionEnd;
+
+    //if ctrl+c is pressed copy to clipboard
+    if(ctrl && (e.keyCode || e.charCode) === 67){
+        document.execCommand("Copy");
+        return;
+    }
+    
+    //if arrows are pressed prevent deletion
+    if((e.keyCode || e.charCode) >= 37 && (e.keyCode || e.charCode) <= 40 )
+        return;
+
+
+    //enable tab
+    if((e.keyCode || e.charCode) === 9){
+        e.preventDefault();
+        // set textarea value to: text before caret + tab + text after caret
+        document.getElementById('editor').value = text.substr(0, char_pos) + "    " + text.substr(char_pos_end);
+        console.log(text.substr(0, char_pos) + "    " + text.substr(char_pos_end));
+        // put caret at right position again
+        document.getElementById('editor').selectionStart =
+            document.getElementById('editor').selectionEnd = char_pos + 4;
+
+        copy_text_to_highlighting_area();
+        return;
+    }
+
     // if backspace was pressed delete '[' or '*' if they are doubled like and space is in between [|] or *|*
     if((e.keyCode || e.charCode) === 8 && document.getElementById('editor').selectionStart === document.getElementById('editor').selectionEnd){
-        no_backspace = false;
 
-        let text = document.getElementById('editor').value;
-        let char_pos = document.getElementById('editor').selectionStart;
-        let key;
         let remove = 0;
 
         switch(text.charAt(char_pos - 1)){
@@ -116,8 +160,20 @@ function backspace(e){
         document.getElementById('editor').value = text.substr(0, char_pos) + text.substr(char_pos+remove);
         document.getElementById('editor').selectionStart = char_pos;
         document.getElementById('editor').selectionEnd = char_pos;
-    }else{
-        no_backspace = true;
+
+    // if area is selected and shall be deleted
+    }else if((e.keyCode || e.charCode) === 8){
+        // left one letter for deletion after keydown
+        document.getElementById('editor').value = text.substr(0, char_pos+1) + text.substr(char_pos_end);
+        document.getElementById('editor').selectionStart = char_pos+1;
+        document.getElementById('editor').selectionEnd = char_pos+1;
+
+    // if area is selected and shall be replaced
+    }else if(!ctrl){
+        do_autocompletion = true;
+        document.getElementById('editor').value = text.substr(0, char_pos) + text.substr(char_pos_end);
+        document.getElementById('editor').selectionStart = char_pos;
+        document.getElementById('editor').selectionEnd = char_pos;
     }
 }
 
