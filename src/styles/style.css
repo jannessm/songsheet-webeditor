@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono');
+.section--editor {
+    position: relative;
+    display: block;
+    overflow: scroll;
+}
+
+.section--preview {
+    overflow: scroll;
+    background: #eee;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+#title_logo{
+    margin-top: 20px;
+    position: absolute;
+    display: inline-block;
+    width: 210px;
+    left: calc(50vw - 120px);
+}
+#title_logo img{
+    margin-left: 47%;
+    width: 50px;
+}
+#title_logo span{
+    padding-top: 10px;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+textarea {
+    resize: none;
+    border: none;
+    overflow: hidden;
+}
+.editor{
+    width: 100%;
+    min-height: 100%;
+    height: fit-content;
+    box-sizing: border-box;
+    color: #ddd;
+}
+#editor{
+    position: relative;
+    top: 0;
+    left: 0;
+    width: calc(100% + 21px); /* div was always 21px bigger in width... */
+    padding: 5px 35px;
+    background: transparent;
+    -webkit-text-fill-color: transparent;
+}
+#editor:focus{
+    border: none;
+    box-shadow: none;
+    outline: none;
+}
+#highlighting_field{
+    display: block;
+    position: absolute;
+    top: 0;
+    z-index: -1;
+    padding: 5px 35px 13px;
+    background: #444;
+}
+#highlighting_field b{
+    letter-spacing: -1px;
+}
+#line-numbers{
+    position: absolute;
+    z-index: 90;
+    background: #555555;
+    border-right: 1px solid #555555;
+    color: grey;
+    width: 30px;
+    height: fit-content;
+    min-height: 100%;
+    top: 0;
+    text-align: right;
+    padding-right: 3px;
+    padding-top: 5px;
+    padding-bottom: 4px;
+    box-sizing: border-box;
+}
+.font_style{
+    font-size: 11px;
+    line-height: 18px;
+    font-style: normal;
+    font-weight: 400;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    letter-spacing: normal;
+    word-spacing: normal;
+    font-family: 'Roboto Mono', monospace;
+}
+
+#preview{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 49%;
+    padding: 30px;
+    height: calc(95% - 20px);
+    box-sizing: border-box;
+    display: inline-block;
+    background: #333;
+    overflow-y: auto;
+    overflow-x: hidden;
+    resize: horizontal;
+}
+
+#help{
+    position: absolute;
+    z-index: 100;
+    top: 30px;
+    left: 30px;
+    width: 41vw;
+    border-radius: 20px;
+    min-height: 100%;
+    height: fit-content;
+    padding: 40px;
+    transition: 0.5s all;
+    background: rgba(250,250,100,0.7);
+    box-shadow: 0 0 10px 0 grey;
+}
+#help code{
+    padding: 3px;
+    background: lightgrey;
+    margin: 2px;
+}
+
+.standard--tab{
+     display: block;
+     width: 100%;
+     padding-bottom: 30px;
+     padding-top: 30px;
+     z-index: 100;
+    position: relative;
+    box-shadow: 5px 0 5px 0 black;
+}

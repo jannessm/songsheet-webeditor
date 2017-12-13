@@ -1,0 +1,74 @@
+<h3>Wie wird der Editor benutzt?</h3>
+Auf der linken Seite befindet sich ein Editor, in dem das gew&uuml;nschte Lied bearbeitet und geschrieben werden kann.
+Auf der rechten Seite wird das PDF als Vorschau gezeigt.<br>
+
+<h3>Elemente</h3>
+<h4>Informationen</h4>
+Alle aufgelisteten Objekte k&ouml;nnen auch durch Simikolons getrennt in einem Klammerpaar zusammengefasst werden. Beispiel:<br>
+<b><code>[title: How Great is our God; bpm: 100]</code></b>
+<table>
+    <tr>
+        <td><code><b>[title: How Great is our God]</b></code></td>
+        <td>Titel</td>
+    </tr>
+    <tr>
+        <td><code><b>[artist: Chance]</b></code></td>
+        <td>K&uuml;stler</td>
+    </tr>
+    <tr>
+        <td><code><b>[bpm: 100]</b></code></td>
+        <td>Titel</td>
+    </tr>
+    <tr>
+        <td><code><b>[books: FJ4 - 129, FJ3 - 28]</b></code></td>
+        <td>Referenzen durch Kommata separiert</td>
+    </tr>
+</table>
+<h4>Abschnitte</h4>
+<h5>Bl&ouml;cke</h5>
+Strophen und Refrain werden in Bl&ouml;cken angegeben, der mit der Zeile<br>
+<code><b>[Block: Strophe 1]</b></code><br>
+startet.
+Anschlie&szlig;end kommt der Inhalt der Strophe. Akkorde werden in eckigen Klammern angegeben an der Stelle, an der sie
+gespielt werden sollen. Beispiel:<br>
+<code>How [G]great is our God, sing with me</code><br>
+
+<h5>Reihenfolge</h5>
+Damit nicht jeder Block mehrmals geschrieben werden muss, kann die Reihenfolge am Anfang angegeben werden. Somit muss im
+Dokument nur einmal der Refrain geschrieben werden, erscheint aber an jeder ben&ouml;tigten Stelle in der PDF.<br>
+<code>[order: Strophe 1, Refrain, Strophe 2, Refrain, Refrain]</code><br>
+Wichtig ist, dass die Titel der Bl&ouml;cke genau so geschrieben werden, wie zu beginn des Blockes.<br>
+
+<h5>Notizen</h5>
+M&ouml;chte man sich Notizen machen, k&ouml;nnen diese hinter die entsprechende Zeile geschrieben werden. Abgetrennt werden diese
+mit dem Zeichen <code>|</code>. Beispiel:<br>
+<code>How [G]great is our God, sing with me | lauter werden | Solo Laura</code><br>
+Hier werden zwei Tabellenspalten kreiert. In der ersten steht <code>lauter werden</code> und in der zweiten <code>Solo Laura</code>.<br>
+Wird die Strophe mehrmals wiederholt und bei jedem vorkommen der Strophe soll etwas anderes stehen, kann das durch Semikolons geschehen:<br>
+<code>How [G]great is our God, sing with me | lauter werden | Solo Laura; Solo Mia</code><br>
+In der ersten Wiederholung wird nur <code>Solo Laura</code> erscheinen und in der zweiten dann <code>Solo Mia</code>.<br>
+
+<h4>Formatierungen</h4>
+Folgende Formatierungen stehen zur verf&uuml;gung:<br>
+<table>
+    <tr>
+        <td><code><i>*text*</i></code></td>
+        <td>schr&auml;ger Text</td>
+    </tr>
+    <tr>
+        <td><code><b>**text**</b></code></td>
+        <td>dicker Text</td>
+    </tr>
+    <tr>
+        <td><code style="color: red">&lt;r>Text&lt;r></code></td>
+        <td>roter Text</td>
+    </tr>
+    <tr>
+        <td><code style="color: green">&lt;g>Text&lt;g></code></td>
+        <td>gr&uuml;ner Text</td>
+    </tr>
+    <tr>
+        <td><code style="color: blue">&lt;b>Text&lt;b></code></td>
+        <td>roter Text</td>
+    </tr>
+</table>
