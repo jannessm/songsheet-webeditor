@@ -106,7 +106,7 @@ function backspace(e){
     do_autocompletion = false;
 
     //if ctrl was pressed and not released do nothing
-    if((e.keyCode || e.charCode) === 17){
+    if((e.keyCode || e.charCode) === 17 || (e.keyCode || e.charCode) === 91){
       ctrl = true;
       return;
     }
