@@ -46,7 +46,6 @@ class Editor{
     }
 
     static onkeyup(e){
-        console.log(e.keyCode);
         if((e.keyCode | e.charCode) === 17)
             ctrl = false;
     }
@@ -121,7 +120,7 @@ function backspace(e){
         document.execCommand("Copy");
         return;
     }
-    
+
     //if arrows are pressed prevent deletion
     if((e.keyCode || e.charCode) >= 37 && (e.keyCode || e.charCode) <= 40 )
         return;
