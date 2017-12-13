@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400');
+
+html, body{
+    background: #eee;
+    margin: 0;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    font-family: 'Open Sans', sans-serif;
+}
+
+#login{
+    background: white;
+    position: absolute;
+    top: calc(50% - 150px);
+    left: calc(50% - 200px);
+    width: 400px;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+    padding: 25px;
+    box-sizing: border-box;
+}
+#login input, input:matches([type="button"]){
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 20px;
+    padding: 10px !important;
+    border-radius: 5px;
+    box-shadow: inset 0 0 0 grey;
+    border-width: 1px;
+}
+input:matches([type="button"]){
+    border: 1px solid blue;
+    background: dodgerblue;
+    color: white;
+}
