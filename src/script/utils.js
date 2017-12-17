@@ -52,15 +52,13 @@ function destroyClickedElement(e){
 }
 
 function onload(){
-    callAjax('/help.html', function(res){
+    get('/help.html', function(res){
         document.getElementById('help').innerHTML = res;
     });
 }
 
-function callAjax(url, callback){
-    let xmlhttp;
-    // compatible with IE7+, Firefox, Chrome, Opera, Safari
-    xmlhttp = new XMLHttpRequest();
+function get(url, callback){
+    let xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function(){
         if (xmlhttp.readyState === 4 && xmlhttp.status === 200){
             callback(xmlhttp.responseText);
@@ -68,4 +66,33 @@ function callAjax(url, callback){
     };
     xmlhttp.open("GET", url, true);
     xmlhttp.send();
+}
+
+function get_json(url, callback){
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (xmlhttp.readyState === 4 && xmlhttp.status === 200){
+            callback(JSON.parse(xmlhttp.responseText));
+        }else if (xmlhttp.status !== 200){
+            callback();
+        }
+    };
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+}
+
+function post(url, json, callback) {
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("POST", url, true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.onreadystatechange = function(){
+        if (xmlhttp.status === 200 && xmlhttp.readyState === 4) {
+            console.log(xmlhttp.responseText);
+            callback(JSON.parse(xmlhttp.responseText));
+        }
+        else if (xmlhttp.status !== 200){
+            callback();
+        }
+    };
+    xmlhttp.send(JSON.stringify(json));
 }

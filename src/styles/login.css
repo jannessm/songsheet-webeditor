@@ -9,7 +9,7 @@ html, body{
     font-family: 'Open Sans', sans-serif;
 }
 
-#login{
+.popup{
     background: white;
     position: absolute;
     top: calc(50% - 150px);
@@ -20,7 +20,7 @@ html, body{
     padding: 25px;
     box-sizing: border-box;
 }
-#login input, input:matches([type="button"]){
+.popup input, input:matches([type="button"]){
     width: 100%;
     box-sizing: border-box;
     margin-top: 20px;

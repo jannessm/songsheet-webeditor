@@ -7,27 +7,33 @@
     <link rel="stylesheet" href="styles/login.css">
 </head>
 <body>
-    <div id="login">
+    <div id="login" v-if="display" class="popup">
         <p>Diese Anwendung funktioniert nur mit einem Dropbox-Account, um alle Daten zu speichern und für andere Verf&uuml;gbar zu machen.</p>
-        <input type="button" value="Login" onclick="login()">
+        <input type="button" value="Anmelden" onclick="login()">
     </div>
 
-    <script src="script/dropbox.js"></script>
-    <script>
-        let dbx = new Dropbox();
-        dbx.setClientId("9mjvocts05n4e47");
+    <div id="set_path" v-if="display" class="popup">
+        <p>Du scheinst Songsheet zum ersten Mal zu verwenden. Wir benötigen einen Speicherort für alle Dateien in deiner Dropbox. Wo soll das sein?</p>
+        <input type="button" value="Auswählen" onclick="set_default_path()">
+    </div>
 
-        if(/access_token/g.test(window.location.href)){
-            dbx.setAccessToken(/access_token=(.+?)&/.exec(window.location.href)[1]);
-        }
-        console.log(dbx.usersGetCurrentAccount());
+    <div id="browser" v-if="display">
+        <div id="header">
+            <label>Einstellungen</label>
+            <label>Abmelden</label>
+        </div>
+        <div id="songs">
+            <input id="search" placeholder="Song suchen">
+            <div v-for="song in songs">
+                <a v-bind:href="song.link" class="title">{{ song.title }}</a>
+                <div class="preview">{{ song.preview }}</div>
+            </div>
+        </div>
+    </div>
 
-        function login(){
-            window.open(dbx.getAuthenticationUrl('http://localhost/'), '_self');
-        }
-
-        //TODO change content if logged in
-        //TODO cookies: accesstoken + default_path for app folder (set folder if first login...)
-    </script>
+    <script src="script/pkgs/dropbox.min.js"></script>
+    <script src="script/pkgs/vue.min.js"></script>
+    <script src="script/utils.js"></script>
+    <script src="script/browser_app.js" defer></script>
 </body>
 </html>
