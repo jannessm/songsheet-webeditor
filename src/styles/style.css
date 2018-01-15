@@ -13,6 +13,10 @@
     box-sizing: border-box;
     position: relative;
 }
+.full-page{
+    transform: scale(2);
+    transform-origin: 0 0;
+}
 
 #title_logo{
     margin-top: 20px;

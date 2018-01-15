@@ -57,6 +57,9 @@
             <a id="get_file" class="button-base footer-button">&Ouml;ffnen</a>
             <input id="file_input" type="file" style="display: none" onchange="openFile(this.files)" onclick="this.value=null;">
         </label>
+        <label style="float: right; margin-right: 20px" class="control-element">
+            <a id="tab_it" class="button-base footer-button" href="/preview.php?id=" target="_blank">Previewtab</a>
+        </label>
         <label style="float: right; margin-right: 50px" class="control-element">
             <a onclick="toggle_help()" class="button-base footer-button">How to</a>
         </label>
@@ -71,10 +74,12 @@
         <div id="previewRenderer" style="margin-top:10px"></div>
         <div id="help" style="opacity: 0;"></div>
     </section>
-    <footer><b><span style="float: right">created By Jannes Magnusson, Niels Rösel</span></b> v1.0.2</footer>
+    <footer><b><span style="float: right">created By Jannes Magnusson, Niels R&ouml;sel</span></b> v1.1.0</footer>
 
     <script type="text/javascript">
         let songJson;
+        const SessionID = Math.round(Math.random()*100000000000000);
+        document.getElementById('tab_it').href += SessionID.toString();
 
         function generate(toPdf) {
             let drawTable = document.getElementById("drawLines").checked;
@@ -98,6 +103,7 @@
             let wysiwyg = new Wysiwyg(drawTable);
             let preview = wysiwyg.convert(songJson);
             document.getElementById("previewRenderer").innerHTML = preview;
+            pushFile('/save_tmp.php', SessionID, preview, function(res){});
         }
 
         //setup events of editor
