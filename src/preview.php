@@ -18,7 +18,7 @@
     <link rel="stylesheet" type="text/css" href="./styles/wysiwyg.css">
     <link rel="stylesheet" type="text/css" href="./styles/scrollbar.css">
     <link rel="stylesheet" type="text/css" href="./styles/standart-elements.css">
-    <link rel="stylesheet" type="text/css" href="./styles/fonts.css">
+    <link rel="stylesheet" type="text/css" href="styles/fonts/fonts.css">
 
 
     <!-- Load scripts -->
