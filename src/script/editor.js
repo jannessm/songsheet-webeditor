@@ -46,7 +46,7 @@ class Editor{
     }
 
     static onkeyup(e){
-        if((e.keyCode | e.charCode) === 17)
+        if(e.keyCode === 17 || e.keyCode === 91 || e.keyCode === 224)
             ctrl = false;
     }
 }
@@ -106,7 +106,7 @@ function backspace(e){
     do_autocompletion = false;
 
     //if ctrl was pressed and not released do nothing
-    if((e.keyCode || e.charCode) === 17 || (e.keyCode || e.charCode) === 91){
+    if(e.keyCode === 17 || e.keyCode === 91 || e.keyCode === 224){
       ctrl = true;
       return;
     }
@@ -131,7 +131,6 @@ function backspace(e){
         e.preventDefault();
         // set textarea value to: text before caret + tab + text after caret
         document.getElementById('editor').value = text.substr(0, char_pos) + "    " + text.substr(char_pos_end);
-        console.log(text.substr(0, char_pos) + "    " + text.substr(char_pos_end));
         // put caret at right position again
         document.getElementById('editor').selectionStart =
             document.getElementById('editor').selectionEnd = char_pos + 4;
