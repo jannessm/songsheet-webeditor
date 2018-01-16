@@ -29,7 +29,7 @@
 <body>
 
 <!-- Preview Section -->
-<section class="section--preview" style="width: 100% !important;height: 100% !important" onclick="eval_click(event)">
+<section class="section--preview" style="width: 100% !important;height: 100% !important" onclick="eval_click(event); return false;">
     <div id="previewRenderer" style="margin: 10px 30px;" class="full-page"></div>
     <div id="help" style="opacity: 0;"></div>
 </section>
@@ -37,7 +37,7 @@
 
 <script type="text/javascript">
     let songJson;
-
+    document.addEventListener('contextmenu', function(event) {eval_click(event); event.preventDefault(); });
     document.body.onkeydown = function(event){
         if(event.keyCode === 39 || event.keyCode === 40)
             scroll_down();
@@ -77,8 +77,8 @@
             400);
     }
     function eval_click(e){
-        let total_width = (document.getElementsByClassName('section--preview')[0]).offsetWidth;
-        if(e.clientX < total_width/2)
+        console.log()
+        if(e.button === 0)
             scroll_up();
         else
             scroll_down();
