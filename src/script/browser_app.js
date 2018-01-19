@@ -22,10 +22,35 @@ let browser_vue = new Vue({
     el: '#browser',
     data: {
         display: false,
-        songs: [
-            { title: "How Great", preview: "Test", link: "#test" }
-        ]
+        songs: {
+            display: true,
+            data: [
+                { title: "How Great", preview: "How Great is our God,...", link: "#test", bpm: "90", artist: "ANKA", books: ["FJ 4 - 100", "FJ 3 - 58"] },
+                { title: "How Great", preview: "How Great is our God,...", link: "#test", bpm: "90", artist: "ANKA", books: ["FJ 4 - 100", "FJ 3 - 58"] },
+                { title: "How Great", preview: "How Great is our God,...", link: "#test", bpm: "90", artist: "ANKA", books: ["FJ 4 - 100", "FJ 3 - 58"] },
+                { title: "How Great", preview: "How Great is our God,...", link: "#test", bpm: "90", artist: "ANKA", books: ["FJ 4 - 100", "FJ 3 - 58"] },
+                { title: "How Great", preview: "How Great is our God,...", link: "#test", bpm: "90", artist: "ANKA", books: ["FJ 4 - 100", "FJ 3 - 58"] },
+                { title: "How Great", preview: "How Great is our God,...", link: "#test", bpm: "90", artist: "ANKA", books: ["FJ 4 - 100", "FJ 3 - 58"] },
+                { title: "How Great", preview: "How Great is our God,...", link: "#test", bpm: "90", artist: "ANKA", books: ["FJ 4 - 100", "FJ 3 - 58"] },
+                { title: "How Great", preview: "How Great is our God,...", link: "#test", bpm: "90", artist: "ANKA", books: ["FJ 4 - 100", "FJ 3 - 58"] },
+                { title: "How Great", preview: "How Great is our God,...", link: "#test", bpm: "90", artist: "ANKA", books: ["FJ 4 - 100", "FJ 3 - 58"] },
+                { title: "How Great", preview: "How Great is our God,...", link: "#test", bpm: "90", artist: "ANKA", books: ["FJ 4 - 100", "FJ 3 - 58"] },
+                { title: "How Great", preview: "How Great is our God,...", link: "#test", bpm: "90", artist: "ANKA", books: ["FJ 4 - 100", "FJ 3 - 58"] },
+                { title: "How Great", preview: "How Great is our God,...", link: "#test", bpm: "90", artist: "ANKA", books: ["FJ 4 - 100", "FJ 3 - 58"] },
+                { title: "How Great", preview: "How Great is our God,...", link: "#test", bpm: "90", artist: "ANKA", books: ["FJ 4 - 100", "FJ 3 - 58"] }
+            ]
+        },
+        events: {
+            display: false,
+            data: [
+                {title: "PfiLa 2018", songs: [ 'our god', 'hosanna'], description: "eine coole veranstaltung"}
+            ]
+        }
     }
+});
+
+let songs_vue = new Vue({
+
 });
 
 // not logged in
@@ -77,4 +102,17 @@ function read_cookie(){
             cookie[values[1]] = values[2];
     }
     return cookie;
+}
+
+function display(key){
+    for(let elem in browser_vue){
+        console.log(elem);
+        if(browser_vue[elem] && browser_vue[elem].display && elem === key){
+            browser_vue[elem].display = true;
+        }
+        else if(browser_vue[elem] && browser_vue[elem].display){
+            console.log(elem, key, elem === key);
+            browser_vue[elem].display = false;
+        }
+    }
 }

@@ -5,6 +5,7 @@
     <title>Songsheet</title>
 
     <link rel="stylesheet" href="styles/login.css">
+    <link rel="stylesheet" href="styles/browser.css">
 </head>
 <body>
     <div id="login" v-if="display" class="popup">
@@ -19,16 +20,64 @@
 
     <div id="browser" v-if="display">
         <div id="header">
-            <label>Einstellungen</label>
-            <label>Abmelden</label>
+            <label onclick="display('songs')">Songs</label>
+            <label onclick="display('events')">Veranstaltungen</label>
+            <label onclick="display('settings')">Einstellungen</label>
+            <label onclick="display('logout')">Abmelden</label>
         </div>
-        <div id="songs">
-            <input id="search" placeholder="Song suchen">
-            <div v-for="song in songs">
-                <a v-bind:href="song.link" class="title">{{ song.title }}</a>
-                <div class="preview">{{ song.preview }}</div>
+        <div id="browser_songs" v-if="songs.display">
+            <h3>Deine Songs<div class="add">+</div></h3>
+            <div id="songs">
+                <input id="search" placeholder="Song suchen" oninput="search(this)">
+                <div v-for="song in songs.data" class="song_box">
+                    <a v-bind:href="song.link" class="song_title">{{ song.title }}<br><span class="song_artist">{{ song.artist }}</span></a>
+                    <div class="song_preview">{{ song.preview }}</div>
+                    <table class="song_attr">
+                        <tr>
+                            <th>BPM</th>
+                            <td>
+                                {{ song.bpm }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>B&uuml;cher</th>
+                            <td>
+                                <ul>
+                                    <li v-for="book in song.books">{{ book }}</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
+        <div id="browser_events" v-if="events.display">
+            <h3>Deine Veranstaltungen<div class="add">+</div></h3>
+            <!--<div id="songs">
+                <input id="search" placeholder="Song suchen" oninput="search(this)">
+                <div v-for="song in songs" class="song_box">
+                    <a v-bind:href="song.link" class="song_title">{{ song.title }}<br><span class="song_artist">{{ song.artist }}</span></a>
+                    <div class="song_preview">{{ song.preview }}</div>
+                    <table class="song_attr">
+                        <tr>
+                            <th>BPM</th>
+                            <td>
+                                {{ song.bpm }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>B&uuml;cher</th>
+                            <td>
+                                <ul>
+                                    <li v-for="book in song.books">{{ book }}</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>-->
+        </div>
+
     </div>
 
     <script src="script/pkgs/dropbox.min.js"></script>

@@ -1,4 +1,85 @@
 #header{
-    height: 200px;
-    padding: 10%:
+    height: 50px;
+    padding: 20px;
+    background: darkblue;
+    color: white;
+    text-align: right;
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0 0 5px 0 black;
+    position: fixed;
+    z-index: 100;
+}
+#header label{
+    margin-left: 20px;
+}
+
+#browser_songs{
+    padding-top: 100px;
+    width: 80%;
+    margin: 0 auto;
+}
+
+#search{
+    background: transparent;
+    color: black;
+    border: none;
+    border-bottom: 1px solid black;
+    width: calc(100% - 80px);
+    padding: 10px;
+    font-size: 1em;
+    margin: 30px;
+}
+
+.song_box{
+    position: relative;
+    background: lightblue;
+    padding: 90px 20px 20px 20px;
+    margin: 20px;
+    width: calc(25% - 40px);
+    height: 250px;
+    box-sizing: border-box;
+    display: inline-block;
+}
+.song_box:hover{
+    background: darkorange;
+}
+.song_title{
+    background: darkgrey;
+    padding: 20px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    left: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-weight: bold;
+    color: black;
+}
+.song_artist{
+    font-size: 0.7em;
+    font-weight: normal;
+}
+.song_attr{
+    width: 100%;
+}
+.song_attr th, td{
+    padding-top: 10px;
+}
+.song_attr th{
+    text-align: left;
+    vertical-align: top;
+}
+.song_attr td ul{
+    margin: 0;
+}
+
+.add{
+    display: inline-block;
+    margin: 10px;
+    width: 20px;
+    height: 20px;
+    background: darkgrey;
+    text-align: center;
+    border-radius: 5px;
 }
