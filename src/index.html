@@ -1,88 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Songsheet</title>
-
-    <link rel="stylesheet" href="styles/login.css">
-    <link rel="stylesheet" href="styles/browser.css">
-</head>
+<html lang="en-US">
+<script src="./script/pkgs/angular.min.js"></script>
 <body>
-    <div id="login" v-if="display" class="popup">
-        <p>Diese Anwendung funktioniert nur mit einem Dropbox-Account, um alle Daten zu speichern und für andere Verf&uuml;gbar zu machen.</p>
-        <input type="button" value="Anmelden" onclick="login()">
-    </div>
 
-    <div id="set_path" v-if="display" class="popup">
-        <p>Du scheinst Songsheet zum ersten Mal zu verwenden. Wir benötigen einen Speicherort für alle Dateien in deiner Dropbox. Wo soll das sein?</p>
-        <input type="button" value="Auswählen" onclick="set_default_path()">
-    </div>
+<div ng-app="Songsheet" ng-controller="ss_ctrl">
+    <p>Name : <input type="text" ng-model="name"></p>
+    <h1>Hello {{name}}</h1>
+</div>
 
-    <div id="browser" v-if="display">
-        <div id="header">
-            <label onclick="display('songs')">Songs</label>
-            <label onclick="display('events')">Veranstaltungen</label>
-            <label onclick="display('settings')">Einstellungen</label>
-            <label onclick="display('logout')">Abmelden</label>
-        </div>
-        <div id="browser_songs" v-if="songs.display">
-            <h3>Deine Songs<div class="add">+</div></h3>
-            <div id="songs">
-                <input id="search" placeholder="Song suchen" oninput="search(this)">
-                <div v-for="song in songs.data" class="song_box">
-                    <a v-bind:href="song.link" class="song_title">{{ song.title }}<br><span class="song_artist">{{ song.artist }}</span></a>
-                    <div class="song_preview">{{ song.preview }}</div>
-                    <table class="song_attr">
-                        <tr>
-                            <th>BPM</th>
-                            <td>
-                                {{ song.bpm }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>B&uuml;cher</th>
-                            <td>
-                                <ul>
-                                    <li v-for="book in song.books">{{ book }}</li>
-                                </ul>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div id="browser_events" v-if="events.display">
-            <h3>Deine Veranstaltungen<div class="add">+</div></h3>
-            <!--<div id="songs">
-                <input id="search" placeholder="Song suchen" oninput="search(this)">
-                <div v-for="song in songs" class="song_box">
-                    <a v-bind:href="song.link" class="song_title">{{ song.title }}<br><span class="song_artist">{{ song.artist }}</span></a>
-                    <div class="song_preview">{{ song.preview }}</div>
-                    <table class="song_attr">
-                        <tr>
-                            <th>BPM</th>
-                            <td>
-                                {{ song.bpm }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>B&uuml;cher</th>
-                            <td>
-                                <ul>
-                                    <li v-for="book in song.books">{{ book }}</li>
-                                </ul>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>-->
-        </div>
-
-    </div>
-
-    <script src="script/pkgs/dropbox.min.js"></script>
-    <script src="script/pkgs/vue.min.js"></script>
-    <script src="script/utils.js"></script>
-    <script src="script/browser_app.js" defer></script>
 </body>
 </html>
