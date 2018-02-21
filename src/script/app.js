@@ -8,8 +8,16 @@ app.run(function($rootScope){
     //set view: if logged in -> browser
     // else -> login
     let file = '/view/login.html';
-    if($rootScope.songsheet.user.getToken() !== undefined){
-        file = '/view/browser.html';
+    switch($rootScope.songsheet.getView()){
+        default:
+        case 'login':
+            file = '/view/login.html';
+            break;
+        case 'setPath':
+            file = '/view/setPath.html';
+            break;
+        case 'browser':
+            file = '/view/browser.html';
     }
     $http.get(file).then(function(response){
         $rootScope.content = response.data;
@@ -65,7 +73,7 @@ class Songsheet{
         this.user = new User();
         if(config.dropbox)
             this.dbx = this.initDBX();
-        this.checkLoginStatus();
+        this.view = this.checkLoginStatus();
     }
 
     checkLoginStatus(){
@@ -73,10 +81,14 @@ class Songsheet{
         let token = $location.search().access_token;
         if(cookie){
             this.user = cookie;
+            return 'browser';
         }else if(token){
             this.user.setToken(token);
             this.dbx.setAccessToken(token);
             this.user.setUserInfo(this.dbx.usersGetCurrentAccount());
+            return 'setPath';
+        }else{
+            return 'login';
         }
     }
 
