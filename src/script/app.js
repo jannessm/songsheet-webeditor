@@ -1,14 +1,13 @@
-let app = angular.module('songsheet', []);
-app.run(function($rootScope){
-    $rootScope.content = '';
+let app = angular.module('songsheet', ['ngCookies']);
+app.controller('mainCtrl', ['$scope', '$cookies', '$http', '$location', function($scope, $cookies, $http, $location){
+    $scope.content = '';
 
-    $rootScope.songsheet = new Songsheet();
-
+    $scope.songsheet = new Songsheet($cookies, $location);
 
     //set view: if logged in -> browser
     // else -> login
     let file = '/view/login.html';
-    switch($rootScope.songsheet.getView()){
+    switch($scope.songsheet.getView()){
         default:
         case 'login':
             file = '/view/login.html';
@@ -20,9 +19,9 @@ app.run(function($rootScope){
             file = '/view/browser.html';
     }
     $http.get(file).then(function(response){
-        $rootScope.content = response.data;
+        $scope.content = response.data;
     });
-});
+}]);
 
 class User{
 
@@ -69,7 +68,9 @@ class User{
 
 class Songsheet{
 
-    constructor(){
+    constructor($cookies, $location){
+        this.$cookies = $cookies;
+        this.$location = $location;
         this.user = new User();
         if(config.dropbox)
             this.dbx = this.initDBX();
@@ -77,8 +78,8 @@ class Songsheet{
     }
 
     checkLoginStatus(){
-        let cookie = $cookies.getObject('songsheet_user');
-        let token = $location.search().access_token;
+        let cookie = this.$cookies.getObject('songsheet_user');
+        let token = this.$location.search().access_token;
         if(cookie){
             this.user = cookie;
             return 'browser';
@@ -97,7 +98,7 @@ class Songsheet{
     }
 
     logout(){
-        $cookies.remove('songsheet_user');
+        this.$cookies.remove('songsheet_user');
     }
 
     initDBX(){
