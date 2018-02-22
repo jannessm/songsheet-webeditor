@@ -49,8 +49,8 @@ app.directive("event", function(){
         templateUrl: 'templates/event.html'
     }
 });
-app.directive("folder", function(){
+app.directive("explorer", function(){
     return {
-        templateUrl: 'templates/folder.html'
+        templateUrl: 'templates/explorer.html'
     }
 });

@@ -1,0 +1,58 @@
+explorer{
+    position: relative;
+    display: block;
+    z-index: 1;
+    background: white;
+    width: calc(340px * 0.95);
+    height: 150px;
+    margin: 20px auto;
+    border: 1px solid grey;
+    border-radius: 10px;
+    padding: 10px;
+    overflow-y: scroll;
+}
+#explorer_controls{
+    position: fixed;
+    z-index: 0;
+    width: 305px;
+    height: 20px;
+    border-bottom: 1px solid grey;
+    background: lightblue;
+    margin: -10px;
+    padding: 5px 20px;
+}
+.explorer_control{
+    display: inline-block;
+}
+#explorer_folder_up{
+    width: 20px;
+    height: 20px;
+    background: orange;
+    margin: -5px 0;
+}
+#explorer_submit{
+    float: right;
+}
+.first_box{
+    margin-top: 30px !important;
+}
+.file_box{
+    margin: 5px;
+    padding: 8px;
+    border-radius: 10px;
+}
+.file_box:hover{
+    background: lightblue;
+}
+.folder, .file{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin: -4px 5px;
+}
+.folder{
+    background: orange;
+}
+.file{
+    background: red;
+}

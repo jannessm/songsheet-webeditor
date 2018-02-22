@@ -8,6 +8,7 @@ app.service('$songsheet', ['$cookies', '$location', function($cookies, $location
 
         if(cookie){
             this.user = new User($cookies, cookie);
+            this.dbx.setAccessToken(this.user.token);
             if(this.user.defaultPath === undefined)
                 return 'setPath';
             return 'browser';
@@ -48,9 +49,10 @@ app.service('$songsheet', ['$cookies', '$location', function($cookies, $location
 
     this.getFiles = function(path, callback){
         if(!path || typeof(path) === "function"){
-            path = '';
             callback = path;
+            path = '';
         }
+        
         this.dbx.filesListFolder({
             path: path,
             recursive: false,

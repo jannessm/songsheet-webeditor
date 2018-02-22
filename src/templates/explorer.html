@@ -1,0 +1,14 @@
+<div id="explorer_controls" ng-init="explorer.submit='Öffnen'">
+    <div id="explorer_folder_up" class="explorer_control"></div>
+    <input id="explorer_path" ng-model="explorer.path" class="explorer_control">
+    <div id="explorer_submit" class="explorer_control">{{ explorer.submit }}</div>
+</div>
+<div ng-repeat-start="file in files" class="file_box first_box" ng-if="$first">
+    <div ng-class="file['.tag']"></div>
+    {{file.name}}
+</div>
+<div ng-repeat-end class="file_box" ng-if="!$first">
+        <div ng-class="file['.tag']"></div>
+        {{file.name}}
+    </div>
+<style ng-include="'../styles/explorer.css'"></style>
