@@ -1,0 +1,30 @@
+
+.song_title{
+    background: darkgrey;
+    padding: 20px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    left: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-weight: bold;
+    color: black;
+}
+.song_artist{
+    font-size: 0.7em;
+    font-weight: normal;
+}
+.song_attr{
+    width: 100%;
+}
+.song_attr th, td{
+    padding-top: 10px;
+}
+.song_attr th{
+    text-align: left;
+    vertical-align: top;
+}
+.song_attr td ul{
+    margin: 0;
+}

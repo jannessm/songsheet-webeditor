@@ -1,0 +1,22 @@
+
+<a ng-href="{{song.link}}" class="song_title">{{ song.title }}<br>
+    <span class="song_artist">{{ song.artist }}</span>
+</a>
+<div class="song_preview">{{ song.preview }}</div>
+<table class="song_attr">
+    <tr>
+        <th>BPM</th>
+        <td>
+            {{ song.bpm }}
+        </td>
+    </tr>
+    <tr>
+        <th>B&uuml;cher</th>
+        <td>
+            <ul>
+                <li ng-repeat="book in song.books">{{ book }}</li>
+            </ul>
+        </td>
+    </tr>
+</table>
+<style ng-include="'../styles/song.css'"></style>

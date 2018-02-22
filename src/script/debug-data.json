@@ -1,0 +1,20 @@
+{
+    "songs": [
+        { "title": "How Great", "preview": "How Great is our God,...", "link": "#test", "bpm": "90", "artist": "ANKA", "books": ["FJ 4 - 100", "FJ 3 - 58"] },
+        { "title": "How Great", "preview": "How Great is our God,...", "link": "#test", "bpm": "90", "artist": "ANKA", "books": ["FJ 4 - 100", "FJ 3 - 58"] },
+        { "title": "How Great", "preview": "How Great is our God,...", "link": "#test", "bpm": "90", "artist": "ANKA", "books": ["FJ 4 - 100", "FJ 3 - 58"] },
+        { "title": "How Great", "preview": "How Great is our God,...", "link": "#test", "bpm": "90", "artist": "ANKA", "books": ["FJ 4 - 100", "FJ 3 - 58"] },
+        { "title": "How Great", "preview": "How Great is our God,...", "link": "#test", "bpm": "90", "artist": "ANKA", "books": ["FJ 4 - 100", "FJ 3 - 58"] },
+        { "title": "How Great", "preview": "How Great is our God,...", "link": "#test", "bpm": "90", "artist": "ANKA", "books": ["FJ 4 - 100", "FJ 3 - 58"] },
+        { "title": "How Great", "preview": "How Great is our God,...", "link": "#test", "bpm": "90", "artist": "ANKA", "books": ["FJ 4 - 100", "FJ 3 - 58"] },
+        { "title": "How Great", "preview": "How Great is our God,...", "link": "#test", "bpm": "90", "artist": "ANKA", "books": ["FJ 4 - 100", "FJ 3 - 58"] },
+        { "title": "How Great", "preview": "How Great is our God,...", "link": "#test", "bpm": "90", "artist": "ANKA", "books": ["FJ 4 - 100", "FJ 3 - 58"] },
+        { "title": "How Great", "preview": "How Great is our God,...", "link": "#test", "bpm": "90", "artist": "ANKA", "books": ["FJ 4 - 100", "FJ 3 - 58"] },
+        { "title": "How Great", "preview": "How Great is our God,...", "link": "#test", "bpm": "90", "artist": "ANKA", "books": ["FJ 4 - 100", "FJ 3 - 58"] },
+        { "title": "How Great", "preview": "How Great is our God,...", "link": "#test", "bpm": "90", "artist": "ANKA", "books": ["FJ 4 - 100", "FJ 3 - 58"] },
+        { "title": "How Great", "preview": "How Great is our God,...", "link": "#test", "bpm": "90", "artist": "ANKA", "books": ["FJ 4 - 100", "FJ 3 - 58"] }
+    ],
+    "events": [
+        {"title": "PfiLa 2018", "songs": [ "our god", "hosanna"], "description": "eine coole veranstaltung"}
+    ]
+}

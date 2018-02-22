@@ -1,11 +1,19 @@
 <!DOCTYPE html>
 <html lang="en-US">
     <head>
-        <script src="./script/pkgs/angular.min.js"></script>
+        <base href="/"/>
+        <script src="./pkgs/dropbox.min.js"></script>
+        <script src="./pkgs/angular-1.6.9/angular.min.js"></script>
+        <script src="./pkgs/angular-1.6.9/angular-cookies.min.js"></script>
+        <script src="./pkgs/angular-1.6.9/angular-route.min.js"></script>
     </head>
     <body ng-app="songsheet" ng-controller="mainCtrl">
-        {{ content }}
+        <main ng-view></main>
         <script src="./script/config.js"></script>
+        <script src="./script/classes/user.js"></script>
         <script src="./script/app.js"></script>
+        <script src="./script/services/songsheet.js"></script>
+        <script src="./script/controller/login.js"></script>
+        <script src="./script/controller/browser.js"></script>
     </body>
 </html>

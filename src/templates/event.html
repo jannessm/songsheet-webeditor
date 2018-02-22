@@ -1,0 +1,13 @@
+    <a ng-href="song.link" class="event_title">{{ event.title }}</a>
+    <div class="event_preview">{{ event.description }}</div>
+    <table class="event_attr">
+        <tr>
+            <th>Songs</th>
+            <td>
+                <ul>
+                    <li ng-repeat="song in event.songs">{{ song }}</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+    <style ng-include="'../styles/event.css'"></style>

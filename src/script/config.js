@@ -1,6 +1,6 @@
 const config={
-    dropbox: false,
-    authLink: 'http://localhost/'
+    dropbox: true,
+    authLink: 'http://localhost/',
+    host: 'http://localhost',
+    debugPage: 'browser'
 };
-
-let $cookies = angular.module('')

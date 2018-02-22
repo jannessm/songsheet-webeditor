@@ -1,108 +1,56 @@
-let app = angular.module('songsheet', ['ngCookies']);
-app.controller('mainCtrl', ['$scope', '$cookies', '$http', '$location', function($scope, $cookies, $http, $location){
-    $scope.content = '';
 
-    $scope.songsheet = new Songsheet($cookies, $location);
+let app = angular.module('songsheet', ['ngCookies', 'ngRoute']);
 
+app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
+    $locationProvider.html5Mode(true);
+
+    $routeProvider
+        .when('/', {
+            templateUrl: "/views/browser.html",
+            controller: "browserCtrl"
+        })
+        .when('/login', {
+            templateUrl: "/views/login.html",
+            controller: "loginCtrl"
+        })
+        .when('/browser', {
+            templateUrl: "/views/browser.html",
+            controller: "browserCtrl"
+        }).otherwise({
+        })
+}]);
+
+app.controller('mainCtrl', ['$location', '$songsheet',
+                            function( $location, $songsheet){
     //set view: if logged in -> browser
     // else -> login
     let file = '/view/login.html';
-    switch($scope.songsheet.getView()){
+    switch($songsheet.getView()){
         default:
         case 'login':
-            file = '/view/login.html';
+            $location.url('/login');
             break;
         case 'setPath':
-            file = '/view/setPath.html';
+            $location.url('/browser?setPath');
             break;
         case 'browser':
-            file = '/view/browser.html';
+            $location.url('/browser');
+            break;
     }
-    $http.get(file).then(function(response){
-        $scope.content = response.data;
-    });
 }]);
 
-class User{
-
-    constructor(){
-        this.name = {
-            firstname: undefined,
-            lastname: undefined,
-        };
-        this.token = undefined;
-        this.defaultPath = undefined;
-        this.db = undefined;
+app.directive("song", function(){
+    return {
+        templateUrl: 'templates/song.html'
     }
-
-    setToken(token){
-        this.token = token;
-        this._updateCookie();
+})
+app.directive("event", function(){
+    return {
+        templateUrl: 'templates/event.html'
     }
-
-    getToken(){
-        if(this.token)
-            return this.token;
-        else
-            return undefined;
+});
+app.directive("folder", function(){
+    return {
+        templateUrl: 'templates/folder.html'
     }
-
-    getFullName(){
-        return this.name.firstname + ' ' + this.name.lastname;
-    }
-
-    _updateCookie(){
-        $cookies.putObject('songsheet_user', {
-            firstname: this.name.firstname,
-            lastname: this.name.lastname,
-            token: this.token,
-            defaultPath: this.defaultPath
-        });
-    }
-
-    setUserInfo(dbxAccount){
-        console.log(dbxAccount);
-        this._updateCookie();
-    }
-}
-
-class Songsheet{
-
-    constructor($cookies, $location){
-        this.$cookies = $cookies;
-        this.$location = $location;
-        this.user = new User();
-        if(config.dropbox)
-            this.dbx = this.initDBX();
-        this.view = this.checkLoginStatus();
-    }
-
-    checkLoginStatus(){
-        let cookie = this.$cookies.getObject('songsheet_user');
-        let token = this.$location.search().access_token;
-        if(cookie){
-            this.user = cookie;
-            return 'browser';
-        }else if(token){
-            this.user.setToken(token);
-            this.dbx.setAccessToken(token);
-            this.user.setUserInfo(this.dbx.usersGetCurrentAccount());
-            return 'setPath';
-        }else{
-            return 'login';
-        }
-    }
-
-    login(){
-        window.open(dbx.getAuthenticationUrl(config.authLink), '_self');
-    }
-
-    logout(){
-        this.$cookies.remove('songsheet_user');
-    }
-
-    initDBX(){
-        let dbx = new Dropbox();
-        dbx.setClientId("9mjvocts05n4e47");
-    }
-}
+});

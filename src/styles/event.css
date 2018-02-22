@@ -1,0 +1,29 @@
+.event_title{
+    background: darkgrey;
+    padding: 20px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    left: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-weight: bold;
+    color: black;
+}
+.event_artist{
+    font-size: 0.7em;
+    font-weight: normal;
+}
+.event_attr{
+    width: 100%;
+}
+.event_attr th, td{
+    padding-top: 10px;
+}
+.event_attr th{
+    text-align: left;
+    vertical-align: top;
+}
+.event_attr td ul{
+    margin: 0;
+}

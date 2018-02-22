@@ -1,0 +1,38 @@
+<div id="browser">
+        <div id="header">
+            <label class="left">{{ name }}</label>
+            <label ng-click="display('songs')">Songs</label>
+            <label ng-click="display('events')">Veranstaltungen</label>
+            <label ng-click="display('settings')">Einstellungen</label>
+            <label ng-click="logout()">Abmelden</label>
+        </div>
+        <span ng-switch="view">
+            <div id="browser_content" ng-switch-when="songs">
+                <h3>Deine Songs<div class="add">+</div></h3>
+                <div id="songs">
+                    <input id="search" placeholder="Song suchen" oninput="search(this)">
+                    <song ng-repeat="song in songs" class="prev_box"></song>
+                </div>
+            </div>
+            <div id="browser_content" ng-switch-when="events">
+                <h3>Deine Veranstaltungen<div class="add">+</div></h3>
+                <div id="events">
+                        <input id="search" placeholder="Veranstaltung suchen" oninput="search(this)">
+                        <event ng-repeat="event in events" class="prev_box"></event>
+                </div>
+            </div>
+            <div id="browser_content" ng-switch-when="settings">
+                <h3>Einstellungen</h3>
+            </div>
+        </span>
+        <div id="setPath" ng-show="setPath">
+            <div id="content">
+                Du scheinst deinen Speicherort noch nicht angegeben zu haben.<br>
+                Damit wir deine Daten auch gut finden, gib bitte an, wo in deiner 
+                Dropbox deine Daten gespeichert werden sollen.
+
+                <folder></folder>
+            </div>
+        </div>
+</div>
+<style ng-include="'../styles/browser.css'"></style>
