@@ -61,6 +61,7 @@ app.service('$songsheet', ['$cookies', '$location', function($cookies, $location
             include_has_explicit_shared_members: true,
             include_mounted_folders: true
         }).then(function(res){
+            res.path = path === ''? '/' : path;
             callback(res);
         }, function(err){
             console.log(err);

@@ -33,6 +33,9 @@ explorer{
 #explorer_submit{
     float: right;
 }
+.explorer_path{
+    display: none;
+}
 .first_box{
     margin-top: 30px !important;
 }

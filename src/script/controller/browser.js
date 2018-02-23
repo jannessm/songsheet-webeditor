@@ -29,7 +29,13 @@ app.controller('browserCtrl', ['$scope', '$songsheet', '$http', '$location', '$i
     }, 10);
 
     $songsheet.getFiles(function(res){
-        $scope.files = res.entries;
-        $scope.cursor = res.cursor;
+        console.log(res);
+        $scope.explorer = {
+            path: res.path,
+            files: res.entries,
+            cursor: res.cursor,
+            has_more: res.has_more,
+            submit: 'Öffnen'
+        }
     });
 }]);
