@@ -1,51 +1,64 @@
 explorer{
-    position: relative;
     display: block;
-    z-index: 1;
     background: white;
     width: calc(340px * 0.95);
     height: 150px;
     margin: 20px auto;
-    border: 1px solid grey;
-    border-radius: 10px;
-    padding: 10px;
-    overflow-y: scroll;
+    padding: 10px 0;
 }
 #explorer_controls{
     position: fixed;
-    z-index: 0;
-    width: 305px;
-    height: 20px;
+    width: 284px;
+    height: 25px;
     border-bottom: 1px solid grey;
     background: lightblue;
-    margin: -10px;
+    margin-top: -10px;
     padding: 5px 20px;
+}
+#explorer_files{
+    margin: 24px 0;
+    height: calc(100% - 15px);
+    overflow-y: scroll;
 }
 .explorer_control{
     display: inline-block;
+}
+#explorer_path{
+    width: 155px;
 }
 #explorer_folder_up{
     width: 20px;
     height: 20px;
     background: orange;
-    margin: -5px 0;
+    margin: -6px 0;
+}
+#explorer_new_folder{
+    width: 20px;
+    height: 20px;
+    background: red;
+    margin: -6px 0;
 }
 #explorer_submit{
     float: right;
+    margin-top: 4px;
 }
 .explorer_path{
     display: none;
 }
-.first_box{
-    margin-top: 30px !important;
-}
 .file_box{
     margin: 5px;
     padding: 8px;
-    border-radius: 10px;
 }
 .file_box:hover{
     background: lightblue;
+}
+.file_box:focus{
+    background: #8DB8D6;
+    border: none !important;
+    outline: none;
+}
+.file_box:focus:hover{
+    background: rgb(159, 202, 233);
 }
 .folder, .file{
     display: inline-block;
@@ -58,4 +71,37 @@ explorer{
 }
 .file{
     background: red;
+}
+
+.effect7
+{
+    position:relative;
+    -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+       -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+            box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+.effect7:before, .effect7:after
+{
+    content:"";
+    position:absolute;
+    z-index:-1;
+    -webkit-box-shadow:0 0 20px rgba(0,0,0,0.8);
+    -moz-box-shadow:0 0 20px rgba(0,0,0,0.8);
+    box-shadow:0 0 20px rgba(0,0,0,0.8);
+    top:0;
+    bottom:0;
+    left:10px;
+    right:10px;
+    -moz-border-radius:100px / 10px;
+    border-radius:100px / 10px;
+}
+.effect7:after
+{
+    right:10px;
+    left:auto;
+    -webkit-transform:skew(8deg) rotate(3deg);
+       -moz-transform:skew(8deg) rotate(3deg);
+        -ms-transform:skew(8deg) rotate(3deg);
+         -o-transform:skew(8deg) rotate(3deg);
+            transform:skew(8deg) rotate(3deg);
 }

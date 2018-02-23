@@ -49,7 +49,8 @@ app.service('$songsheet', ['$cookies', '$location', function($cookies, $location
 
     this.getFiles = function(path, callback){
         if(!path || typeof(path) === "function"){
-            callback = path;
+            if(!callback)
+                callback = path;
             path = '';
         }
         

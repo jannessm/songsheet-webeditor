@@ -1,5 +1,5 @@
-app.controller('browserCtrl', ['$scope', '$songsheet', '$http', '$location', '$interval',
-                                function($scope, $songsheet, $http, $location, $interval){
+app.controller('browserCtrl', ['$scope', '$songsheet', '$http', '$location', '$interval', '$explorer',
+                                function($scope, $songsheet, $http, $location, $interval, $explorer){
     $http.get('script/debug-data.json').then(function(data){
         if(!config.dropbox){
             $scope.songs = data.data.songs;
@@ -20,22 +20,40 @@ app.controller('browserCtrl', ['$scope', '$songsheet', '$http', '$location', '$i
     $scope.logout = function(){
         $songsheet.logout();
     }
-    
-    let i = $interval(function () {
-        if($songsheet.user.name.firstname !== undefined){
-            $scope.name = $songsheet.user.getFullName();
-            $interval.cancel(i);
-        }
-    }, 10);
 
-    $songsheet.getFiles(function(res){
-        console.log(res);
-        $scope.explorer = {
-            path: res.path,
-            files: res.entries,
-            cursor: res.cursor,
-            has_more: res.has_more,
-            submit: 'Öffnen'
-        }
-    });
+    $explorer.init('Öffnen');
+    $scope.explorer = {};
+    updateExplorer();
+    updateName();
+
+    $scope.explorer.doubleClick = function(elem, type){
+        $explorer.doubleClick(elem, type);
+    }
+    $scope.explorer.folderUp = function(){
+        $explorer.folderUp();
+    }
+    $scope.explorer.createFolder = function(){
+        console.log(angular.element('.file_box[:focus]'));
+        //$explorer.newFolder($scope.explorer)
+    }
+    $scope.submit = function(){
+        //set defaultpath by $scope.explorer.path
+        $location.url('/browser');
+    }
+
+
+
+    function updateExplorer(){   
+        let i = $interval(function (){
+            $scope.explorer = Object.assign($scope.explorer, $explorer.getState());
+        }, 10);
+    }
+    function updateName(){   
+        let i = $interval(function () {
+            if($songsheet.user.name.firstname !== undefined){
+                $scope.name = $songsheet.user.getFullName();
+                $interval.cancel(i);
+            }
+        }, 10);
+    }
 }]);

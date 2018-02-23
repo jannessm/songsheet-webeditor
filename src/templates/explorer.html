@@ -1,15 +1,14 @@
 <div id="explorer_controls">
-    <div id="explorer_folder_up" class="explorer_control"></div>
-    <input id="explorer_path" ng-model="explorer.path" class="explorer_control">
-    <div id="explorer_submit" class="explorer_control">{{ explorer.submit }}</div>
+    <div id="explorer_folder_up" class="explorer_control" ng-click="explorer.folderUp()"></div>
+    <input id="explorer_path" ng-model="explorer.path" class="explorer_control" tabindex="1">
+    <div id="explorer_new_folder" class="explorer_control" ng-click="explorer.createFolder()"></div>
+    <div id="explorer_submit" class="explorer_control" ng-click="submit()">{{ explorer.submit }}</div>
 </div>
-<div ng-repeat-start="file in explorer.files" class="file_box first_box" ng-if="$first" ng-click="select(this)">
-    <div ng-class="file['.tag']"></div>
-    {{file.name}}
-    <span class="explorer_path">{{file.path_display}}</span>
-</div>
-<div ng-repeat-end class="file_box" ng-if="!$first">
+<div id="explorer_files">
+    <div ng-repeat="file in explorer.files" class="file_box" tabindex="2" ng-dblclick="explorer.doubleClick($event.currentTarget, file['.tag'])">
         <div ng-class="file['.tag']"></div>
         {{file.name}}
+        <span class="explorer_path">{{file.path_display}}</span>
     </div>
+</div>
 <style ng-include="'../styles/explorer.css'"></style>
