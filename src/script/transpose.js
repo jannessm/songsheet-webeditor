@@ -1,6 +1,6 @@
 // Author Nils Rösel 2018
 
-//chord => string like [Fmaj7] + or - dif half tone steps
+//chord => character root note; + or - dif half tone steps
 function transposeNote(chord, dif) {
     const keys = CircularArray([
         ['C', 'D', 'E', 'F', 'G', 'A', 'H'],
@@ -22,14 +22,35 @@ function transposeNote(chord, dif) {
 // Inputs text:string, dif:int :: Outputs modified Text 
 function transposer(text, dif) {
     const alreadyTransposedKey = '--trspsd--';
-    const chordMatcher = new RegExp('\[[a-z#0-9]*\]', 'gui').exec(text);
+    const chordMatcher =
+        new RegExp('\\[[abcdefghABCDEFGH]#?[a-zA-Z#/ ]*?\\]', 'gui')
+            .exec(text);
     chordMatcher.map(chord => {
-        const targetChord = transpose(chord, dif) + alreadyTransposedKey;
+        console.log(chord)
+        // Get chord root
+        const rootMatcher = new RegExp('\[[abcdefghABCDEFGH]#?', 'gui').exec(chord);
+        const root = rootMatcher ?
+            transposeNote(rootMatcher[0].replace('[', ''), dif) : '';
+        // Get base root in the chord
+        const baseMatcher = new RegExp('\/[abcdefghABCDEFGH]#?').exec(chord);
+        const base = baseMatcher
+            ? transposeNote(baseMatcher[0].replace('/', ''), dif) : '';
+
+        // Get chord extension -> replace notes with empty string
+        const noExtension =
+            new RegExp('/[abcdefghABCDEFGH]#?|\\[[abcdefghABCDEFGH]#?', 'gui').exec(chord);
+        let extString = chord;
+        if (noExtension != null) {
+            noExtension.forEach(match => extString = extString.replace(match, ''))
+        }
+        // Assemble transposed chord
+        const targetChord = root + extString + base + alreadyTransposedKey;
+        console.log(targetChord)
         return TransposedChordMap(chord, targetChord);
     }).forEach(chordMapItem =>
-        text.replaceAll(chordMapItem.origin, chordMapItem.target)
+        text.replace(chordMapItem.origin, chordMapItem.target)
         );
-    text.replaceAll(alreadyTransposedKey, '');
+    text.replace(alreadyTransposedKey, '');
 }
 
 function TransposedChordMap(origin, target) {
@@ -52,3 +73,7 @@ function CircularArray(target) {
         }
     });
 }
+
+const test = "testhallo[Cmaj7][Gmaj7]";
+console.log(test);
+console.log(transposer(test, 5))
